@@ -4,6 +4,21 @@ if [[ "$1" == "--no-confirm" ]]; then
     prompt_confirmation=false
 fi
 
+# Change to the directory where this script is located
+cd "$(dirname "$0")"
+
+
+# Example: Create a swap file for hibernation
+fallocate -l 2G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none swap defaults 0 0' | tee -a /etc/fstab
+echo 'GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=/dev/mapper/$(lsblk -no UUID $DEVICE-crypt)"' | tee -a /etc/default/grub
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
+
 declare -A prep_stage=(
     [base-devel]="Base development tools"
     [git]="Version control system"
@@ -332,6 +347,7 @@ EOF
 echo -e "$CNT - Install Starship"
 echo -e "$CNT - Updating .bashrc..."
 echo -e '\neval "$(starship init bash)"' >> ~/.bashrc
+echo -e '\neval "$(starship init zsh)"' >> ~/.zshrc
 echo -e "$CNT - copying starship config file to ~/.config ..."
 mkdir -p ~/.config
 cp configs/starship/starship.toml ~/.config/
