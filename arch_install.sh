@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ensure jq and archinstall are installed
-pacman -Sy --noconfirm jq archinstall
+pacman -Sy --noconfirm jq archinstall git
 
 # Find the largest SSD/NVMe device
 DEVICE=$(lsblk -d -o NAME,TYPE,SIZE | grep -E 'ssd|nvme' | sort -k3 -rh | head -n 1 | awk '{print $1}')
@@ -23,9 +23,6 @@ if [ "$LUKS_PASSWORD" != "$LUKS_PASSWORD_CONFIRM" ]; then
   echo "Passwords do not match."
   exit 1
 fi
-
-# Capture the original directory
-ORIGINAL_DIR=$(pwd)
 
 # Create the archinstall configuration file
 CONFIG_FILE="archinstall-config.json"
@@ -86,17 +83,28 @@ cat > $CONFIG_FILE <<EOF
     "vim",
     "grub",
     "os-prober",
-    "efibootmgr"
+    "efibootmgr",
+    "git"
   ],
   "services": [
     "NetworkManager"
   ],
   "post_install_script": {
-    "path": "$ORIGINAL_DIR/arch_post_install.sh",
+    "path": "/root/post_install.sh",
     "run_in_chroot": true
   }
 }
 EOF
+
+# Create a post-install script that clones the repository and runs the actual post-install script
+cat > /root/post_install.sh <<EOF
+#!/bin/bash
+git clone https://github.com/KonTy/archk /root/archk
+cd /root/archk
+./arch_post_install.sh
+EOF
+
+chmod +x /root/post_install.sh
 
 # Run archinstall with the generated configuration file
 archinstall --config $CONFIG_FILE
