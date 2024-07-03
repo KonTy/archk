@@ -4,8 +4,12 @@ if [[ "$1" == "--no-confirm" ]]; then
     prompt_confirmation=false
 fi
 
-
 declare -A prep_stage=(
+    [base-devel]="Base development tools"
+    [git]="Version control system"
+    [ttf-jetbrains-mono-nerd]="JetBrains Mono Nerd Font"
+    [noto-fonts-emoji]="Google Noto emoji fonts"
+    [gvfs]="GNOME Virtual File System support for NTFS and other file systems"
     [qt5-wayland]="Qt5 Wayland platform"
     [qt5ct]="Qt5 Configuration Tool"
     [qt6-wayland]="Qt6 Wayland platform"
@@ -16,15 +20,29 @@ declare -A prep_stage=(
     [gtk3]="GTK+ 3 toolkit"
     [polkit-gnome]="Polkit GNOME authentication agent"
     [timeshift]="System restore utility"
-    [pipewire]="Multimedia server"
-    [wireplumber]="PipeWire session manager"
     [jq]="JSON processor"
     [wl-clipboard]="Clipboard manager for Wayland"
     [cliphist]="Clipboard history manager"
     [python-requests]="Python HTTP library"
     [pacman-contrib]="Pacman utilities"
-    [base-devel]="Base development tools"
-    [git]="Version control system"
+    [brightnessctl]="CLI tool to control screen brightness"
+    [bluez]="Bluetooth protocol stack for Linux"
+    [bluez-utils]="Utilities for Bluetooth development"
+    [blueman]="GTK+ Bluetooth Manager"
+    [network-manager-applet]="Applet for managing network connections"
+    [btop]="Resource monitor that shows usage and stats"
+)
+
+declare -A audio_stage=(
+    [pipewire]="Multimedia server"
+    [wireplumber]="PipeWire session manager"
+    [pipewire-alsa]="ALSA support for PipeWire"
+    [pipewire-jack]="JACK support for PipeWire"
+    [pipewire-pulse]="PulseAudio support for PipeWire"
+    [alsa-utils]="ALSA utilities"
+    [helvum]="GTK patchbay for PipeWire"
+    [pamixer]="Pulseaudio command-line mixer like amixer"
+    [pavucontrol]="PulseAudio Volume Control"
 )
 
 #software for nvidia GPU
@@ -39,47 +57,34 @@ declare -A nvidia_stage=(
 #the main packages
 declare -A install_stage=(
     [hyprland]="Desktop manager"
+    [sddm]="Simple Desktop Display Manager"
+    [waybar]="Highly customizable Wayland bar for Sway and Wlroots based compositors"
+    [wofi]="Application launcher for Wayland"
     [kitty]="A fast, feature-rich, GPU-based terminal emulator"
     [starship]="Cross-shell prompt for astronauts"
     [mako]="Lightweight notification daemon for Wayland"
-    [waybar]="Highly customizable Wayland bar for Sway and Wlroots based compositors"
-    [swww]="Wallpaper setter for Wayland"
-    [swaylock-effects]="Swaylock with fancy effects"
-    [wofi]="Application launcher for Wayland"
-    [wlogout]="Wayland logout menu"
     [xdg-desktop-portal-hyprland]="XDG desktop portal backend for Hyprland"
     [swappy]="A Wayland native snapshot editing tool"
-    [davinci-resolve-studio]="Professional video editing software"
     [grim]="Grab images from a Wayland compositor"
     [slurp]="Select a region in a Wayland compositor"
-    [thunar]="Modern file manager for Xfce"
-    [btop]="Resource monitor that shows usage and stats"
+    [mc]="Midnight commander terminal file manager"
     [firefox]="Web browser from Mozilla"
     [thunderbird]="Email client from Mozilla"
+    [brave-bin]="Brave browser"
     [mpv]="Media player"
-    [pamixer]="Pulseaudio command-line mixer like amixer"
-    [pavucontrol]="PulseAudio Volume Control"
-    [brightnessctl]="CLI tool to control screen brightness"
-    [bluez]="Bluetooth protocol stack for Linux"
-    [bluez-utils]="Utilities for Bluetooth development"
-    [blueman]="GTK+ Bluetooth Manager"
-    [network-manager-applet]="Applet for managing network connections"
-    [gvfs]="GNOME Virtual File System"
-    [thunar-archive-plugin]="Create and extract archive files in Thunar"
-    [file-roller]="Archive manager for GNOME"
+    [davinci-resolve-studio]="Professional video editing software"
+)
+
+declare -A optional_stage=(
+    [swww]="Wallpaper setter for Wayland"
+    [swaylock-effects]="Swaylock with fancy effects"
+    [wlogout]="Wayland logout menu"
     [papirus-icon-theme]="Icon theme for Linux"
-    [ttf-jetbrains-mono-nerd]="JetBrains Mono Nerd Font"
-    [noto-fonts-emoji]="Google Noto emoji fonts"
     [lxappearance]="GTK+ theme switcher"
     [xfce4-settings]="Settings manager for Xfce"
     [nwg-look-bin]="GTK3 settings editor for wlroots-based compositors"
-    [sddm]="Simple Desktop Display Manager"
+    [ardour]="Digital audio workstation"    
 )
-
-for key in "${!install_stage[@]}"; do
-    echo "$key - ${install_stage[$key]}"
-done
-
 
 # set some colors
 CNT="[\e[1;36mNOTE\e[0m]"
@@ -91,7 +96,6 @@ CAC="[\e[1;33mACTION\e[0m]"
 INSTLOG="install.log"
 
 ######
-# functions go here
 
 # function that would show a progress bar to the user
 show_progress() {
@@ -181,7 +185,6 @@ if [ ! -f /sbin/yay ]; then
     fi
 fi
 
-### Install all of the above pacakges ####
 if [ "$prompt_confirmation" = true ]; then
     read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n) ' INST
     if [[ $INST != "Y" && $INST != "y" ]]; then
@@ -190,10 +193,17 @@ if [ "$prompt_confirmation" = true ]; then
     fi
 fi
 
-# Prep Stage - Bunch of needed items
+# Prep Stage 
 echo -e "$CNT - Prep Stage - Installing needed components, this may take a while..."
 for SOFTWR in "${!prep_stage[@]}"; do
     DESCRIPTION="${prep_stage[$SOFTWR]}"
+    echo "Installing $SOFTWR - $DESCRIPTION"
+    install_software "$SOFTWR"
+done
+
+echo -e "$CNT - Prep Stage - Installing needed components, this may take a while..."
+for SOFTWR in "${!audio_stage[@]}"; do
+    DESCRIPTION="${audio_stage[$SOFTWR]}"
     echo "Installing $SOFTWR - $DESCRIPTION"
     install_software "$SOFTWR"
 done
@@ -213,7 +223,7 @@ if [[ "$ISNVIDIA" == true ]]; then
 fi
 
 echo -e "$CNT - Installing main components..."
-for SOFTWR in "${!nvidiinstall_stagea_stage[@]}"; do
+for SOFTWR in "${!install_stage[@]}"; do
     DESCRIPTION="${install_stage[$SOFTWR]}"
     echo "Installing $SOFTWR - $DESCRIPTION"
     install_software "$SOFTWR"
@@ -292,8 +302,14 @@ else
     sudo mkdir $WLDIR
 fi 
 
-# stage the .desktop file
-sudo cp Extras/hyprland.desktop /usr/share/wayland-sessions/
+# stage the .desktop file, which is used by SDDM to show it during login
+sudo tee /usr/share/wayland-sessions/hyprland.desktop > /dev/null << 'EOF'
+[Desktop Entry]
+Name=Hyprland
+Comment=An intelligent dynamic tiling Wayland compositor
+Exec=Hyprland
+Type=Application
+EOF
 
 
 # Copy the SDDM theme
@@ -317,7 +333,8 @@ echo -e "$CNT - Install Starship"
 echo -e "$CNT - Updating .bashrc..."
 echo -e '\neval "$(starship init bash)"' >> ~/.bashrc
 echo -e "$CNT - copying starship config file to ~/.config ..."
-cp Extras/starship.toml ~/.config/
+mkdir -p ~/.config
+cp configs/starship/starship.toml ~/.config/
 
 
 ### Script is done ###
