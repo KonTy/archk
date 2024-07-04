@@ -120,7 +120,7 @@
         "interval": 30,
         "format": " {}",
         "keyboard-name": "logitech-pro-gaming-keyboard",
-        "on-click": "~/.config/configs/hyprv_util swkb",
+        "on-click": "~/.config/configs/hypr/scripts/hypr_common swkb",
         "signal": 8
     },
 

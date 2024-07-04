@@ -1,11 +1,11 @@
 {
     "custom/myhyprv": {
         //shows the current power profile and switches to next on click
-        "exec": "~/.config/configs/hyprv_util",
+        "exec": "~/.config/configs/hypr/scripts/hypr_common",
         "return-type" : "json",
         "interval": 30,
         "format": "{}",
-        "on-click": "~/.config/configs/hyprv_util vswitch",
+        "on-click": "~/.config/configs/hypr/scripts/hypr_common vswitch",
         "tooltip": true
     },
 }

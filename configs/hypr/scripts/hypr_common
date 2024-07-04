@@ -1,19 +1,16 @@
 #!/bin/bash
 . ~/.config/configs/hyprv.conf
 
+set_monitors() {
+    # Get the list of monitors
+    monitors=$(hyprctl monitors | grep "name:" | awk '{print $2}')
 
-if [[ "$1" == "vswitch" ]]; then
-    switch_version
-    update_theme
-    restart_waybar
-elif [[ "$1" == "setbg" ]]; then
-    set_current_background
-    update_theme
-    restart_waybar
-elif [[ "$1" == "swkb" ]]; then
-    switch_keyboard
-    restart_waybar
-fi
+    # Loop through each monitor and set the highest resolution
+    for monitor in $monitors; do
+        highest_resolution=$(hyprctl monitors | grep "$monitor" -A 10 | grep "modes:" -A 1 | tail -1 | awk '{print $1}')
+        hyprctl dispatch dpms "$monitor" "$highest_resolution"
+    done
+}
 
 get_theme() {
     # Check which waybar theme is set
@@ -69,6 +66,10 @@ if [[ "$1" == "vswitch" ]]; then
     restart_waybar
 elif [[ "$1" == "setbg" ]]; then
     set_current_background
+    update_theme
+    restart_waybar
+elif [[ "$1" == "setmonitors" ]]; then
+    set_monitors
     update_theme
     restart_waybar
 elif [[ "$1" == "swkb" ]]; then

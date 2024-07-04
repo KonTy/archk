@@ -19,6 +19,13 @@ cd "$(dirname "$0")"
 # invoke hybernation
 # set computer so it goes to sleep hybernaes after some time
 # set background swww img ~/.config/configs/backgrounds/$VER'-background-dark.jpg'
+# auto detect surface 
+# auto detect and install intel video
+# auto detect and install amd video
+# test screen sharing with teams and obs
+# test screen capture
+# figure out hyprv.conf local how to set and how it works
+# figure out how to switch keyboards by keypress
 
 
 # Example: Create a swap file for hibernation
@@ -360,6 +367,7 @@ EOF
 # cp -f ~/.config/configs/backgrounds/background-dark.jpg /usr/share/sddm/themes/sdt/wallpaper.jpg
 
 make_scripts_executable "$HOME/.config/configs/waybar/scripts"
+make_scripts_executable "$HOME/.config/configs/hypr/scripts"
 
 ### Install the starship shell ###
 echo -e "$CNT - Install Starship"
