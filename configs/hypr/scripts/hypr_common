@@ -61,7 +61,7 @@ function set_current_background() {
         logger -t hypr "hypr: Selected background: $randombackground"
         hyprctl hyprpaper preload "$randombackground"
         hyprctl hyprpaper wallpaper ,"$randombackground"
-        logger -t hypr "hypr:  Wallpaper set to: $randombackground"
+        logger -t hypr "hypr: Wallpaper set to: $randombackground"
     else
         logger -t hypr "hypr: No background selected"
     fi
