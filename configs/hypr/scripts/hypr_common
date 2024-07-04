@@ -58,17 +58,52 @@ function set_current_background() {
     fi
 }
 
-function random_hex() {
-    random_hex=("0xff$(openssl rand -hex 3)")
-    echo $random_hex
-}
 
+# Define an array of hex color codes from navy to orange to red
+colors=(
+    "0xff000080" # Navy
+    "0xff00008b" # DarkBlue
+    "0xff0000cd" # MediumBlue
+    "0xff0000ff" # Blue
+    "0xff1e90ff" # DodgerBlue
+    "0xff00bfff" # DeepSkyBlue
+    "0xff00ffff" # Aqua
+    "0xff7fffd4" # Aquamarine
+    "0xff7cfc00" # LawnGreen
+    "0xffffa500" # Orange
+    "0xffff8c00" # DarkOrange
+    "0xffff4500" # OrangeRed
+    "0xffff0000" # Red
+    "0xffdc143c" # Crimson
+)
+
+function random_hex() {
+    # Select a random color from the array
+    random_index=$((RANDOM % ${#colors[@]}))
+    echo ${colors[$random_index]}
+}
 
 function set_random_border() {
-    random_hex
-    hyprctl keyword general:col.active_border $(random_hex)  $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
-    hyprctl keyword general:col.inactive_border $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
+    hyprctl keyword general:col.active_border \
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 270deg
+    
+    hyprctl keyword general:col.inactive_border \
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 270deg
 }
+
+
+# function random_hex() {
+#     random_hex=("0xff$(openssl rand -hex 3)")
+#     echo $random_hex
+# }
+
+# function set_random_border() {
+#     random_hex
+#     hyprctl keyword general:col.active_border $(random_hex)  $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
+#     hyprctl keyword general:col.inactive_border $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
+# }
 
 
 function switch_keyboard() {
