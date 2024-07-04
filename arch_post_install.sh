@@ -155,14 +155,14 @@ install_software() {
 clear
 
 
-# starting setup 
-if [ "$prompt_confirmation" = true ]; then
-    read -rep $'[\e[1;33mACTION\e[0m] - Would you like to continue with the install (y,n) ' CONTINST
-    if [[ $CONTINST != "Y" && $CONTINST != "y" ]]; then
-        echo -e "$CNT - This script will now exit, no changes were made to your system."
-        exit 1
-    fi
-fi
+# # starting setup 
+# if [ "$prompt_confirmation" = true ]; then
+#     read -rep $'[\e[1;33mACTION\e[0m] - Would you like to continue with the install (y,n) ' CONTINST
+#     if [[ $CONTINST != "Y" && $CONTINST != "y" ]]; then
+#         echo -e "$CNT - This script will now exit, no changes were made to your system."
+#         exit 1
+#     fi
+# fi
 
 echo -e "$CNT - Setup starting..."
 sudo touch /tmp/configs.tmp
@@ -207,13 +207,13 @@ if [ ! -f /sbin/yay ]; then
     fi
 fi
 
-if [ "$prompt_confirmation" = true ]; then
-    read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n) ' INST
-    if [[ $INST != "Y" && $INST != "y" ]]; then
-        echo "Installation cancelled."
-        exit 1
-    fi
-fi
+# if [ "$prompt_confirmation" = true ]; then
+#     read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n) ' INST
+#     if [[ $INST != "Y" && $INST != "y" ]]; then
+#         echo "Installation cancelled."
+#         exit 1
+#     fi
+# fi
 
 # Call the install function with all package names
 echo -e "$CNT - Prep Stage - Installing needed components"
@@ -240,12 +240,7 @@ install_software install_stage
 # echo -e "$CNT - Starting the Bluetooth Service..."
 # sudo systemctl enable --now bluetooth.service &>> $INSTLOG
 # sleep 2
-
-# Enable the sddm login manager service
-echo -e "$CNT - Enabling the SDDM Service..."
-sudo systemctl enable sddm &>> $INSTLOG
-sleep 2
-    
+   
 # Clean out other portals
 echo -e "$CNT - Cleaning out conflicting xdg portals..."
 yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
@@ -352,4 +347,10 @@ if [[ "$ISNVIDIA" == true ]]; then
     Please type 'reboot' at the prompt and hit Enter when ready."
     exit
 fi
+
+# Enable the sddm login manager service
+echo -e "$CNT - Enabling the SDDM Service..."
+sudo systemctl enable sddm &>> $INSTLOG
+sleep 2
+
 exec sudo systemctl start sddm &>> $INSTLOG
