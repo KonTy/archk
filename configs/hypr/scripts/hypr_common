@@ -53,7 +53,8 @@ set_current_background() {
 
     # Pass the selected file to swww
     if [ -n "$randombackground" ]; then
-        swww img "$randombackground"
+        hyprctl hyprpaper preload "$randombackground"
+        hyprctl hyprpaper wallpaper "$randombackground"
     fi
 }
 

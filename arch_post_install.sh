@@ -102,7 +102,6 @@ declare -A install_stage=(
     [sddm]="Simple Desktop Display Manager"
     [waybar]="Highly customizable Wayland bar for Sway and Wlroots based compositors"
     [wofi]="Application launcher for Wayland"
-    [swww]="Wallpaper setter for Wayland"
     [kitty]="A fast, feature-rich, GPU-based terminal emulator"
     [starship]="Cross-shell prompt for astronauts"
     [mako]="Lightweight notification daemon for Wayland"
