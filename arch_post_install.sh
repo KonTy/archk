@@ -83,11 +83,9 @@ declare -A install_stage=(
     [grim]="Grab images from a Wayland compositor"
     [slurp]="Select a region in a Wayland compositor"
     [mc]="Midnight commander terminal file manager"
-    [firefox]="Web browser from Mozilla"
     [thunderbird]="Email client from Mozilla"
     [brave-bin]="Brave browser"
     [mpv]="Media player"
-    [davinci-resolve-studio]="Professional video editing software"
 )
 
 declare -A optional_stage=(
@@ -99,6 +97,8 @@ declare -A optional_stage=(
     [xfce4-settings]="Settings manager for Xfce"
     [nwg-look-bin]="GTK3 settings editor for wlroots-based compositors"
     [ardour]="Digital audio workstation"    
+    [davinci-resolve-studio]="Professional video editing software"
+    [firefox]="Web browser from Mozilla"
 )
 
 # set some colors
