@@ -294,7 +294,7 @@ yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
 echo -e "$CNT - Copying config files..."
 
 # copy the configs directory
-cp -R configs ~/.config/
+cp -R -u configs ~/.config/
 
 #set the measuring unit for waybar
 echo -e "$CNT - Attempring to set mesuring unit..."
@@ -325,7 +325,7 @@ done
 
 # link up the config files
 echo -e "$CNT - Setting up the new config..." 
-cp ~/.config/configs/hypr/* ~/.config/hypr/
+cp -R -u -f ~/.config/configs/hypr/* ~/.config/hypr/
 ln -sf ~/.config/configs/kitty/kitty.conf ~/.config/kitty/kitty.conf
 ln -sf ~/.config/configs/mako/conf/config ~/.config/mako/config
 ln -sf ~/.config/configs/swaylock/config ~/.config/swaylock/config
@@ -335,12 +335,12 @@ ln -sf ~/.config/configs/wlogout/layout ~/.config/wlogout/layout
 ln -sf ~/.config/configs/wofi/config ~/.config/wofi/config
 ln -sf ~/.config/configs/wofi/style/style-dark.css ~/.config/wofi/style.css
 
-sudo cp -f ~/.config/configs/mc/ini ~/.config/mc/ini 
-sudo cp -f ~/.config/configs/mc/darkened.ini /usr/share/mc/skins/darkened.ini
+sudo cp -f -u ~/.config/configs/mc/ini ~/.config/mc/ini 
+sudo cp -f -u ~/.config/configs/mc/darkened.ini /usr/share/mc/skins/darkened.ini
 
 
 mkdir -p ~/.themes
-cp -r -f -d ~/.config/configs/gtktheme/Arc-BLACKEST ~/.themes/
+cp -r -f -d -u ~/.config/configs/gtktheme/Arc-BLACKEST ~/.themes/
 xfconf-query -c xsettings -p /Net/ThemeName -s "BWnB-GTK"
 xfconf-query -c xsettings -p /Net/IconThemeName -s "BWnB-GTK"
 xfconf-query -c xsettings -p /Gtk/CursorThemeName -s "BWnB-GTK"
@@ -371,7 +371,7 @@ EOF
 
 # Copy the SDDM theme
 echo -e "$CNT - Setting up the login screen."
-sudo cp -R sddm/TerminalStyleLogin /usr/share/sddm/themes/
+sudo cp -R -u sddm/TerminalStyleLogin /usr/share/sddm/themes/
 sudo chown -R $USER:$USER /usr/share/sddm/themes/TerminalStyleLogin
 sudo mkdir /etc/sddm.conf.d
 echo -e "[Theme]\nCurrent=TerminalStyleLogin" | sudo tee -a /etc/sddm.conf.d/10-theme.conf &>> $INSTLOG
@@ -394,7 +394,7 @@ echo -e '\neval "$(starship init bash)"' >> ~/.bashrc
 echo -e '\neval "$(starship init zsh)"' >> ~/.zshrc
 echo -e "$CNT - copying starship config file to ~/.config ..."
 mkdir -p ~/.config
-cp configs/starship/starship.toml ~/.config/
+cp -f -u configs/starship/starship.toml ~/.config/
 
 
 ### Script is done ###
