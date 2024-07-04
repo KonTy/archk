@@ -54,7 +54,7 @@ function set_current_background() {
     # Pass the selected file to swww
     if [ -n "$randombackground" ]; then
         hyprctl hyprpaper preload "$randombackground"
-        hyprctl hyprpaper wallpaper "$randombackground"
+        hyprctl hyprpaper wallpaper ,"$randombackground"
     fi
 }
 
@@ -71,7 +71,7 @@ function set_random_border() {
 }
 
 
-switch_keyboard() {
+function switch_keyboard() {
     hyprctl switchxkblayout $SET_KB next
 }
 
