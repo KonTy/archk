@@ -73,15 +73,6 @@ declare -A prep_stage=(
     [network-manager-applet]="Applet for managing network connections"
     [btop]="Resource monitor that shows usage and stats"
     [xfconf]="xfconf-query library"
-    [wayland-protocols]="Wayland protocols"
-    [libjpeg-turbo]="JPEG image library"
-    [libwebp]="WebP image library"
-    [pango]="Text layout and rendering library"
-    [cairo]="2D graphics library"
-    [pkgconf]="Package compiler and linker metadata toolkit"
-    [cmake]="Cross-platform make"
-    [libglvnd]="The GL Vendor-Neutral Dispatch library"
-    [wayland]="Wayland display server protocol"    
 )
 
 declare -A hyprpaper_stage=(
