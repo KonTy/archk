@@ -39,6 +39,7 @@ dec_volume() {
 
 # Toggle Mute
 toggle_mute() {
+	echo "$(date) - toggle_mute triggered with arguments: $@" >> /tmp/waybar.log
 	if [ "$(pamixer --get-mute)" == "false" ]; then
 		pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
 	elif [ "$(pamixer --get-mute)" == "true" ]; then
@@ -48,6 +49,7 @@ toggle_mute() {
 
 # Toggle Mic
 toggle_mic() {
+	echo "$(date) - toggle_mic triggered with arguments: $@" >> /tmp/waybar.log
 	if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
 		pamixer --default-source -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$iDIR/microphone-mute.png" "Microphone Switched OFF"
 	elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then

@@ -46,6 +46,7 @@ declare -A prep_stage=(
     [blueman]="GTK+ Bluetooth Manager"
     [network-manager-applet]="Applet for managing network connections"
     [btop]="Resource monitor that shows usage and stats"
+    [xfconf]="xfconf-query library"
 )
 
 declare -A audio_stage=(
@@ -291,12 +292,12 @@ ln -sf ~/.config/configs/wlogout/layout ~/.config/wlogout/layout
 ln -sf ~/.config/configs/wofi/config ~/.config/wofi/config
 ln -sf ~/.config/configs/wofi/style/style-dark.css ~/.config/wofi/style.css
 
-cp -f ~/.config/configs/mc/ini ~/.config/mc/ini 
-cp -f ~/.config/configs/mc/darkened.ini /usr/share/mc/skins/darkened.ini
+sudo cp -f ~/.config/configs/mc/ini ~/.config/mc/ini 
+sudo cp -f ~/.config/configs/mc/darkened.ini /usr/share/mc/skins/darkened.ini
 
 
 mkdir -p ~/.themes
-cp ~/.config/configs/gtktheme/Arc-BLACKEST ~/.themes/
+cp -r -f -d ~/.config/configs/gtktheme/Arc-BLACKEST ~/.themes/
 xfconf-query -c xsettings -p /Net/ThemeName -s "BWnB-GTK"
 xfconf-query -c xsettings -p /Net/IconThemeName -s "BWnB-GTK"
 xfconf-query -c xsettings -p /Gtk/CursorThemeName -s "BWnB-GTK"
