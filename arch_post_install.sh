@@ -86,6 +86,7 @@ declare -A install_stage=(
     [thunderbird]="Email client from Mozilla"
     [brave-bin]="Brave browser"
     [mpv]="Media player"
+    [fastfetch]="Show system info"
 )
 
 declare -A optional_stage=(

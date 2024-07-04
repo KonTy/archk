@@ -9,25 +9,74 @@
     "modules-left": [
         "hyprland/workspaces" 
     ],
+    "hyprland/workspaces": {
+        "disable-scroll": false,
+        "disable-scroll-wraparound": true,
+        "enable-bar-scroll": true,
+        "all-outputs": false,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "2": "爵",
+            "3": "",
+            "4": "",
+            "5": "󰭹",
+            "6": "",
+            "7": "",
+            "8": "",
+            "9": "",
+            "urgent": "",
+            "default": ""
+        }
+   },
     "modules-center": [
         "idle_inhibitor",
-        "clock",
-        "custom/updates"
     ],
     "modules-right": [
+        "mpd",
         "pulseaudio",
         "pulseaudio#microphone",
         "backlight",
         "tray",
         "temperature",
-        "custom/power_profile",
         "battery",
         "hyprland/language",
         "custom/myhyprv",
         "custom/power_btn",
         "custom/lock_screen",
+        "clock",
+        "custom/updates"
     ],
-    
+    "mpd": {
+        "server": "127.0.0.2",
+        "format": "{consumeIcon}{artist} - <span style=\"italic\">{title}</span>{singleIcon}{repeatIcon}{randomIcon}{stateIcon}",
+        "format-disconnected": " ",
+        "format-stopped": "{consumeIcon}{singleIcon}{repeatIcon}{randomIcon} ",
+        "title-len": 42,
+        "unknown-tag": "N/A",
+        "interval": 1,
+        "on-click": "mpc --host=127.0.0.2 toggle > /dev/null",
+        "on-click-right": "mpc --host=127.0.0.2 next > /dev/null",
+        "on-click-middle": "mpc --host=127.0.0.2 prev > /dev/null",
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": " ",
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "playing": " ",
+            "paused": " "
+        },
+        "tooltip-format": "{artist} - {album} ({date})",
+    },
     "include": [
         "~/.config/configs/waybar/conf/mesu.jsonc",
         "~/.config/configs/waybar/conf/hyprv-util.jsonc"
@@ -60,33 +109,6 @@
         "format": "",
         "on-click": "sh -c '(sleep 0.5s; swaylock)' & disown",
         "tooltip": false
-    },
-
-    "wlr/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "on-click": "activate",
-        "persistent_workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": [],
-            "10": []
-        }
-    },
-
-    "cpu": {
-        "interval": 10,
-        "format": "",
-        "max-length": 10,
-        "format-alt-click": "click-right",
-        "format-alt": " {usage}%",
-        "on-click": "kitty --start-as=fullscreen --title btop sh -c 'btop'"
     },
 
     "battery": {
@@ -151,7 +173,6 @@
         "icon-size": 16,
         "spacing": 10
     },
-
     "custom/updates": {
         "format": "{}",
         "exec": "~/.config/configs/waybar/scripts/update-sys",
