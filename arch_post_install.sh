@@ -17,6 +17,7 @@ echo '/swapfile none swap defaults 0 0' | tee -a /etc/fstab
 echo 'GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=/dev/mapper/$(lsblk -no UUID $DEVICE-crypt)"' | tee -a /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
+kill -9 $(pgrep wayland)
 
 declare -A prep_stage=(
     [base-devel]="Base development tools"
