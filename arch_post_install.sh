@@ -290,6 +290,9 @@ ln -sf ~/.config/configs/wlogout/layout ~/.config/wlogout/layout
 ln -sf ~/.config/configs/wofi/config ~/.config/wofi/config
 ln -sf ~/.config/configs/wofi/style/style-dark.css ~/.config/wofi/style.css
 
+cp -f ~/.config/configs/mc/ini ~/.config/mc/ini 
+cp -f ~/.config/configs/mc/darkened.ini /usr/share/mc/skins/darkened.ini
+
 
 mkdir -p ~/.themes
 cp ~/.config/configs/gtktheme/Arc-BLACKEST ~/.themes/
