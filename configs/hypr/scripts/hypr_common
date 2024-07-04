@@ -120,11 +120,11 @@ function switch_keyboard() {
 
 if [[ "$1" == "vswitch" ]]; then
     #update_theme
-    #restart_waybar
+    restart_waybar
 elif [[ "$1" == "setbg" ]]; then
     set_current_background
-    update_theme
-    restart_waybar
+    # update_theme
+    #restart_waybar
 elif [[ "$1" == "setmonitors" ]]; then
     set_monitors
     update_theme
