@@ -364,11 +364,11 @@ EOF
 
 
 # Copy the SDDM theme
-# echo -e "$CNT - Setting up the login screen."
-# sudo cp -R Extras/sdt /usr/share/sddm/themes/
-# sudo chown -R $USER:$USER /usr/share/sddm/themes/sdt
-# sudo mkdir /etc/sddm.conf.d
-# echo -e "[Theme]\nCurrent=sdt" | sudo tee -a /etc/sddm.conf.d/10-theme.conf &>> $INSTLOG
+echo -e "$CNT - Setting up the login screen."
+sudo cp -R sddm/TerminalStyleLogin /usr/share/sddm/themes/
+sudo chown -R $USER:$USER /usr/share/sddm/themes/TerminalStyleLogin
+sudo mkdir /etc/sddm.conf.d
+echo -e "[Theme]\nCurrent=TerminalStyleLogin" | sudo tee -a /etc/sddm.conf.d/10-theme.conf &>> $INSTLOG
 
 
 # setup the first look and feel as dark
