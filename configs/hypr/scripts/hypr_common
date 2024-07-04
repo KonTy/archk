@@ -48,16 +48,22 @@ function set_current_background() {
     # Directory containing the background images
     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
 
+    # Log function call
+    logger -t hypr "hypr: set_current_background called"
+
     # Select a random .jpg file from the directory
     randombackground=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
 
-    # Pass the selected file to swww
+    # Check if a background image was selected
     if [ -n "$randombackground" ]; then
+        logger -t hypr "hypr: Selected background: $randombackground"
         hyprctl hyprpaper preload "$randombackground"
         hyprctl hyprpaper wallpaper ,"$randombackground"
+        logger -t hypr "hypr:  Wallpaper set to: $randombackground"
+    else
+        logger -t hypr "hypr: No background selected"
     fi
 }
-
 
 # Define an array of hex color codes from navy to orange to red
 colors=(
