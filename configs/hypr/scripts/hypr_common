@@ -1,7 +1,7 @@
 #!/bin/bash
 . ~/.config/configs/hyprv.conf
 
-set_monitors() {
+function set_monitors() {
     # Get the list of monitors
     monitors=$(hyprctl monitors | grep "name:" | awk '{print $2}')
 
@@ -12,7 +12,7 @@ set_monitors() {
     done
 }
 
-get_theme() {
+function get_theme() {
     # Check which waybar theme is set
     THEMEIS=$(readlink -f ~/.config/waybar/style.css | cut -d '-' -f3)
 
@@ -26,7 +26,7 @@ get_theme() {
     fi
 }
 
-update_theme() {
+function update_theme() {
     #set the xfce and GTK theme
     xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
     gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
@@ -34,17 +34,17 @@ update_theme() {
     gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-Dark"
 }
 
-get_ver() {
+function get_ver() {
     VER=$(readlink -f ~/.config/waybar/config.jsonc | cut -d '-' -f1 | cut -d '/' -f8)
 }
 
-restart_waybar() {
+function restart_waybar() {
     #restart the waybar
     pkill waybar
     waybar --config ~/.config/configs/waybar/conf/config.jsonc
 }
 
-set_current_background() {
+function set_current_background() {
     # Directory containing the background images
     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
 
@@ -57,6 +57,19 @@ set_current_background() {
         hyprctl hyprpaper wallpaper "$randombackground"
     fi
 }
+
+function random_hex() {
+    random_hex=("0xff$(openssl rand -hex 3)")
+    echo $random_hex
+}
+
+
+function set_random_border() {
+    random_hex
+    hyprctl keyword general:col.active_border $(random_hex)  $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
+    hyprctl keyword general:col.inactive_border $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
+}
+
 
 switch_keyboard() {
     hyprctl switchxkblayout $SET_KB next
@@ -76,6 +89,8 @@ elif [[ "$1" == "setmonitors" ]]; then
 elif [[ "$1" == "swkb" ]]; then
     switch_keyboard
     restart_waybar
+elif [[ "$1" == "setborder" ]]; then
+    set_random_border
 fi
 
 # need to show the version and tooltip
