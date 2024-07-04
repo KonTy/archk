@@ -282,13 +282,20 @@ done
 echo -e "$CNT - Setting up the new config..." 
 cp ~/.config/configs/hypr/* ~/.config/hypr/
 ln -sf ~/.config/configs/kitty/kitty.conf ~/.config/kitty/kitty.conf
-ln -sf ~/.config/configs/mako/conf/config-dark ~/.config/mako/config
+ln -sf ~/.config/configs/mako/conf/config ~/.config/mako/config
 ln -sf ~/.config/configs/swaylock/config ~/.config/swaylock/config
 ln -sf ~/.config/configs/waybar/conf/config.jsonc ~/.config/waybar/config.jsonc
-ln -sf ~/.config/configs/waybar/style/style-dark.css ~/.config/waybar/style.css
+ln -sf ~/.config/configs/waybar/style/style.css ~/.config/waybar/style.css
 ln -sf ~/.config/configs/wlogout/layout ~/.config/wlogout/layout
 ln -sf ~/.config/configs/wofi/config ~/.config/wofi/config
 ln -sf ~/.config/configs/wofi/style/style-dark.css ~/.config/wofi/style.css
+
+
+mkdir -p ~/.themes
+cp ~/.config/configs/gtktheme/Arc-BLACKEST ~/.themes/
+xfconf-query -c xsettings -p /Net/ThemeName -s "BWnB-GTK"
+xfconf-query -c xsettings -p /Net/IconThemeName -s "BWnB-GTK"
+xfconf-query -c xsettings -p /Gtk/CursorThemeName -s "BWnB-GTK"
 
 
 # add the Nvidia env file to the config (if needed)

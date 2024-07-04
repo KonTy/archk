@@ -7,9 +7,7 @@
     "gtk-layer-shell": true,
     "height": 20,
     "modules-left": [
-        "custom/power_btn",
-        "custom/lock_screen",
-        "wlr/workspaces"
+        "hyprland/workspaces" 
     ],
     "modules-center": [
         "idle_inhibitor",
@@ -17,7 +15,6 @@
         "custom/updates"
     ],
     "modules-right": [
-        "cpu",
         "pulseaudio",
         "pulseaudio#microphone",
         "backlight",
@@ -28,6 +25,8 @@
         "hyprland/language",
         "custom/myhyprv",
         "custom/light_dark"
+        "custom/power_btn",
+        "custom/lock_screen",
     ],
     
     "include": [

@@ -8,11 +8,4 @@
         "on-click": "~/.config/configs/hyprv_util vswitch",
         "tooltip": true
     },
-
-    "custom/light_dark": {
-        "format": "󰐾",
-        "on-click": "~/.config/configs/waybar/scripts/baraction light",
-        "tooltip": false
-    }
-
 }
