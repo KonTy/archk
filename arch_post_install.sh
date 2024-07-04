@@ -18,7 +18,6 @@ echo 'GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=/dev/mapper/$(lsblk -no UUID $DEV
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
-
 declare -A prep_stage=(
     [base-devel]="Base development tools"
     [git]="Version control system"
@@ -153,18 +152,27 @@ install_software() {
     fi
 }
 
+# Function to make all files in the specified directory executable
+make_scripts_executable() {
+    local script_dir="$1"
+
+    # Check if the directory exists
+    if [ ! -d "$script_dir" ]; then
+        echo "Directory $script_dir does not exist."
+        return 1
+    fi
+
+    # Loop through all files in the directory and apply chmod +x
+    for file in "$script_dir"/*; do
+        if [ -f "$file" ]; then
+            chmod +x "$file"
+            echo "Made executable: $file"
+        fi
+    done
+}
+
 # clear the screen
 clear
-
-
-# # starting setup 
-# if [ "$prompt_confirmation" = true ]; then
-#     read -rep $'[\e[1;33mACTION\e[0m] - Would you like to continue with the install (y,n) ' CONTINST
-#     if [[ $CONTINST != "Y" && $CONTINST != "y" ]]; then
-#         echo -e "$CNT - This script will now exit, no changes were made to your system."
-#         exit 1
-#     fi
-# fi
 
 echo -e "$CNT - Setup starting..."
 sudo touch /tmp/configs.tmp
@@ -209,14 +217,6 @@ if [ ! -f /sbin/yay ]; then
     fi
 fi
 
-# if [ "$prompt_confirmation" = true ]; then
-#     read -rep $'[\e[1;33mACTION\e[0m] - Would you like to install the packages? (y,n) ' INST
-#     if [[ $INST != "Y" && $INST != "y" ]]; then
-#         echo "Installation cancelled."
-#         exit 1
-#     fi
-# fi
-
 # Call the install function with all package names
 echo -e "$CNT - Prep Stage - Installing needed components"
 install_software prep_stage
@@ -246,7 +246,6 @@ install_software install_stage
 # Clean out other portals
 echo -e "$CNT - Cleaning out conflicting xdg portals..."
 yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG
-
 
 echo -e "$CNT - Copying config files..."
 
@@ -341,6 +340,7 @@ EOF
 # gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
 # cp -f ~/.config/configs/backgrounds/background-dark.jpg /usr/share/sddm/themes/sdt/wallpaper.jpg
 
+make_scripts_executable "$HOME/.config/configs/waybar/scripts"
 
 ### Install the starship shell ###
 echo -e "$CNT - Install Starship"
