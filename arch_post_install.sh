@@ -123,24 +123,31 @@ show_progress() {
     sleep 2
 }
 
-# function that will test for a package and if not found it will attempt to install it
 install_software() {
-    # First lets see if the package is there
-    if yay -Q $1 &>> /dev/null ; then
-        echo -e "$COK - $1 is already installed."
-    else
-        # no package found so installing
-        echo -en "$CNT - Now installing $1 ."
-        yay -S --noconfirm $1 &>> $INSTLOG &
+    declare -n packages=$1  # Use nameref to reference the dictionary passed as argument
+    packages_to_install=""
+    
+    for package in "${!packages[@]}"; do
+        packages_to_install+="$package "
+        # Print package description
+        echo "Installing $package - ${packages[$package]}"
+    done
+    
+    # Install all packages at once, only if they are not already installed
+    if [ -n "$packages_to_install" ]; then
+        echo -en "$CNT - Now installing $packages_to_install."
+        yay -S --needed --noconfirm $packages_to_install &>> $INSTLOG &
         show_progress $!
-        # test to make sure package installed
-        if yay -Q $1 &>> /dev/null ; then
-            echo -e "\e[1A\e[K$COK - $1 was installed."
-        else
-            # if this is hit then a package is missing, exit to review log
-            echo -e "\e[1A\e[K$CER - $1 install had failed, please check the install.log"
-            exit
-        fi
+        
+        # Verify installation of each package
+        for package in $packages_to_install; do
+            if yay -Q "$package" &> /dev/null ; then
+                echo -e "\e[1A\e[K$COK - $package was installed."
+            else
+                echo -e "\e[1A\e[K$CER - $package install failed, please check the install.log"
+                exit 1
+            fi
+        done
     fi
 }
 
@@ -208,29 +215,18 @@ if [ "$prompt_confirmation" = true ]; then
     fi
 fi
 
-# Prep Stage 
-echo -e "$CNT - Prep Stage - Installing needed components, this may take a while..."
-for SOFTWR in "${!prep_stage[@]}"; do
-    DESCRIPTION="${prep_stage[$SOFTWR]}"
-    echo "Installing $SOFTWR - $DESCRIPTION"
-    install_software "$SOFTWR"
-done
+# Call the install function with all package names
+echo -e "$CNT - Prep Stage - Installing needed components"
+install_software prep_stage
 
-echo -e "$CNT - Prep Stage - Installing needed components, this may take a while..."
-for SOFTWR in "${!audio_stage[@]}"; do
-    DESCRIPTION="${audio_stage[$SOFTWR]}"
-    echo "Installing $SOFTWR - $DESCRIPTION"
-    install_software "$SOFTWR"
-done
+echo -e "$CNT - Audio Stage - Installing audio components"
+install_software audio_stage
 
 # Setup Nvidia if it was found
 if [[ "$ISNVIDIA" == true ]]; then
     echo -e "$CNT - Nvidia GPU support setup stage..."
-    for SOFTWR in "${!nvidia_stage[@]}"; do
-        DESCRIPTION="${nvidia_stage[$SOFTWR]}"
-        echo "Installing $SOFTWR - $DESCRIPTION"
-        install_software "$SOFTWR"
-    done
+    install_software nvidia_stage
+
     # update config
     sudo sed -i 's/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
     sudo mkinitcpio --config /etc/mkinitcpio.conf --generate /boot/initramfs-custom.img
@@ -238,16 +234,12 @@ if [[ "$ISNVIDIA" == true ]]; then
 fi
 
 echo -e "$CNT - Installing main components..."
-for SOFTWR in "${!install_stage[@]}"; do
-    DESCRIPTION="${install_stage[$SOFTWR]}"
-    echo "Installing $SOFTWR - $DESCRIPTION"
-    install_software "$SOFTWR"
-done
+install_software install_stage
 
 # Start the bluetooth service
-echo -e "$CNT - Starting the Bluetooth Service..."
-sudo systemctl enable --now bluetooth.service &>> $INSTLOG
-sleep 2
+# echo -e "$CNT - Starting the Bluetooth Service..."
+# sudo systemctl enable --now bluetooth.service &>> $INSTLOG
+# sleep 2
 
 # Enable the sddm login manager service
 echo -e "$CNT - Enabling the SDDM Service..."

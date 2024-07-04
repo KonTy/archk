@@ -29,6 +29,14 @@ CONFIG_FILE="archinstall-config.json"
 
 cat > $CONFIG_FILE <<EOF
 {
+  "additional-repositories": [],
+  "archinstall-language": "English",
+  "audio_config": {
+      "audio": "pipewire"
+  },
+  "bootloader": "Systemd-boot",
+  "config_version": "2.8.1",
+  "debug": false, 
   "disk": {
     "device": "$DEVICE",
     "partitions": [
