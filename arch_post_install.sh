@@ -48,6 +48,7 @@ declare -A prep_stage=(
     [base-devel]="Base development tools"
     [git]="Version control system"
     [ttf-jetbrains-mono-nerd]="JetBrains Mono Nerd Font"
+    [ttf-dejavu]="Dejavu fonts"
     [noto-fonts-emoji]="Google Noto emoji fonts"
     [gvfs]="GNOME Virtual File System support for NTFS and other file systems"
     [qt5-wayland]="Qt5 Wayland platform"

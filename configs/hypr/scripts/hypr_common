@@ -44,6 +44,8 @@ function restart_waybar() {
     waybar --config ~/.config/configs/waybar/conf/config.jsonc
 }
 
+# journalctl -t hypr
+# journalctl | grep '^hypr:'
 function set_current_background() {
     # Directory containing the background images
     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
