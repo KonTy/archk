@@ -8,6 +8,19 @@ fi
 cd "$(dirname "$0")"
 
 
+# TODO: how to make brave dark?
+# How to lock system with win+L
+# how to control volume and brigtness
+#how to show wifi and bluetooth and airplane mode
+# how to auto mount usb
+# how to change SDDM to dark theme
+# set background
+# how to show windows title
+# invoke hybernation
+# set computer so it goes to sleep hybernaes after some time
+# set background swww img ~/.config/configs/backgrounds/$VER'-background-dark.jpg'
+
+
 # Example: Create a swap file for hibernation
 fallocate -l 2G /swapfile
 chmod 600 /swapfile
@@ -17,8 +30,13 @@ echo '/swapfile none swap defaults 0 0' | tee -a /etc/fstab
 echo 'GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=/dev/mapper/$(lsblk -no UUID $DEVICE-crypt)"' | tee -a /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
-kill -9 $(pgrep wayland)
+sudo usermod -a -G audio $USER
 
+pkill waybar
+
+# https://wiki.hyprland.org/Useful-Utilities/Must-have/
+# for XDPH doesn’t implement a file picker. For that, I recommend installing xdg-desktop-portal-gtk alongside XDPH.
+# The most basic way of seeing if everything is OK is by trying to screenshare anything, or by opening OBS and selecting the PipeWire source. If XDPH is running, a Qt menu will pop up asking you what to share.
 declare -A prep_stage=(
     [base-devel]="Base development tools"
     [git]="Version control system"
@@ -32,6 +50,7 @@ declare -A prep_stage=(
     [qt5-svg]="Qt5 SVG support"
     [qt5-quickcontrols2]="Qt5 Quick Controls 2"
     [qt5-graphicaleffects]="Qt5 Graphical Effects"
+    [xdg-desktop-portal-hyprland]="XDG desktop portal backend for Hyprland"    
     [gtk3]="GTK+ 3 toolkit"
     [polkit-gnome]="Polkit GNOME authentication agent"
     [timeshift]="System restore utility"
@@ -76,10 +95,10 @@ declare -A install_stage=(
     [sddm]="Simple Desktop Display Manager"
     [waybar]="Highly customizable Wayland bar for Sway and Wlroots based compositors"
     [wofi]="Application launcher for Wayland"
+    [swww]="Wallpaper setter for Wayland"
     [kitty]="A fast, feature-rich, GPU-based terminal emulator"
     [starship]="Cross-shell prompt for astronauts"
     [mako]="Lightweight notification daemon for Wayland"
-    [xdg-desktop-portal-hyprland]="XDG desktop portal backend for Hyprland"
     [swappy]="A Wayland native snapshot editing tool"
     [grim]="Grab images from a Wayland compositor"
     [slurp]="Select a region in a Wayland compositor"
@@ -91,7 +110,6 @@ declare -A install_stage=(
 )
 
 declare -A optional_stage=(
-    [swww]="Wallpaper setter for Wayland"
     [swaylock-effects]="Swaylock with fancy effects"
     [wlogout]="Wayland logout menu"
     [papirus-icon-theme]="Icon theme for Linux"

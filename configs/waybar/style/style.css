@@ -8,8 +8,8 @@
 }
 
 window#waybar {
-    background: rgba(0, 0, 0, 0);
-    color: #ffcc7f;
+    background: #00000000;
+    color: #42d100;
 }
 
 tooltip {

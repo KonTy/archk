@@ -1,6 +1,20 @@
 #!/bin/bash
 . ~/.config/configs/hyprv.conf
 
+
+if [[ "$1" == "vswitch" ]]; then
+    switch_version
+    update_theme
+    restart_waybar
+elif [[ "$1" == "setbg" ]]; then
+    set_current_background
+    update_theme
+    restart_waybar
+elif [[ "$1" == "swkb" ]]; then
+    switch_keyboard
+    restart_waybar
+fi
+
 get_theme() {
     # Check which waybar theme is set
     THEMEIS=$(readlink -f ~/.config/waybar/style.css | cut -d '-' -f3)
@@ -17,16 +31,10 @@ get_theme() {
 
 update_theme() {
     #set the xfce and GTK theme
-    if [[ $VER == "v4" || $VERTO == "v4-" ]]; then
-        xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
-        gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
-    else 
-        xfconf-query -c xsettings -p /Net/IconThemeName -s "Adwaita$SWITCHTO"
-        gsettings set org.gnome.desktop.interface icon-theme "Adwaita$SWITCHTO"
-    fi
-
-    xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita$SWITCHTO"
-    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita$SWITCHTO"
+    xfconf-query -c xsettings -p /Net/IconThemeName -s "Papirus-Dark"
+    gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
+    xfconf-query -c xsettings -p /Net/ThemeName -s "Adwaita-Dark"
+    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-Dark"
 }
 
 get_ver() {
@@ -40,67 +48,16 @@ restart_waybar() {
 }
 
 set_current_background() {
-    get_theme
-    get_ver
-    
-    if [[ ! -z "$SET_BG" ]]; then
-        #set the current background
-        if [[ $THEMEIS == "dark.css" ]]; then
-            swww img ~/.config/configs/backgrounds/$VER'-background-dark.jpg'
-        else
-            swww img ~/.config/configs/backgrounds/$VER'-background.jpg'
-        fi
-    else
-        swww img $SET_BG
+    # Directory containing the background images
+    BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
+
+    # Select a random .jpg file from the directory
+    randombackground=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
+
+    # Pass the selected file to swww
+    if [ -n "$randombackground" ]; then
+        swww img "$randombackground"
     fi
-}
-
-switch_version() {
-    get_theme
-    get_ver
-    case $VER in
-        v1)
-            #we are on v1 so switch to v2
-            VERTO="v2-"
-            notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "switching to HyprV2"
-        ;;
-        
-        v2)
-            #we are on v2 so switch to v3
-            VERTO="v3-"
-            notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "switching to HyprV3"
-        ;;
-
-        v3)
-            #we are on v3 so switch to v4
-            VERTO="v4-"
-            notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "switching to HyprV4"
-        ;;
-
-        v4)
-            #we are on v4 so switch to v1
-            VERTO="v1-"
-            notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "switching to HyprV1"
-        ;;
-        
-    esac
-    #set the waybar config
-    ln -sf ~/.config/configs/waybar/conf/$VERTO'config.jsonc' ~/.config/waybar/config.jsonc
-    #set the waybar theme
-    ln -sf ~/.config/configs/waybar/style/$VERTO'style'$SWITCHTO.css ~/.config/waybar/style.css
-    #set the wofi theme
-    ln -sf ~/.config/configs/wofi/style/$VERTO'style'$SWITCHTO.css ~/.config/wofi/style.css
-
-    #set the background
-    if [ -z $SET_BG ]; then
-        swww img ~/.config/configs/backgrounds/$VERTO'background'$SWITCHTO.jpg --transition-fps 60 --transition-type wipe --transition-duration 2
-    else
-        swww img $SET_BG --transition-fps 60 --transition-type wipe --transition-duration 2
-    fi
-
-    #update the sddm image
-    cp -f ~/.config/configs/backgrounds/$VERTO'background'$SWITCHTO.jpg /usr/share/sddm/themes/sdt/wallpaper.jpg
-
 }
 
 switch_keyboard() {
@@ -108,7 +65,6 @@ switch_keyboard() {
 }
 
 if [[ "$1" == "vswitch" ]]; then
-    switch_version
     update_theme
     restart_waybar
 elif [[ "$1" == "setbg" ]]; then
