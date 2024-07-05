@@ -29,15 +29,15 @@ cd "$(dirname "$0")"
 
 
 # Example: Create a swap file for hibernation
-fallocate -l 2G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-echo '/swapfile none swap defaults 0 0' | tee -a /etc/fstab
-echo 'GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=/dev/mapper/$(lsblk -no UUID $DEVICE-crypt)"' | tee -a /etc/default/grub
-grub-mkconfig -o /boot/grub/grub.cfg
+# fallocate -l 2G /swapfile
+# chmod 600 /swapfile
+# mkswap /swapfile
+# swapon /swapfile
+# echo '/swapfile none swap defaults 0 0' | tee -a /etc/fstab
+# echo 'GRUB_CMDLINE_LINUX_DEFAULT="quiet resume=/dev/mapper/$(lsblk -no UUID $DEVICE-crypt)"' | tee -a /etc/default/grub
+# grub-mkconfig -o /boot/grub/grub.cfg
 
-sudo usermod -a -G audio $USER
+# sudo usermod -a -G audio $USER
 
 pkill waybar
 
@@ -59,13 +59,16 @@ declare -A prep_stage=(
     [qt5-svg]="Qt5 SVG support"
     [qt5-quickcontrols2]="Qt5 Quick Controls 2"
     [qt5-graphicaleffects]="Qt5 Graphical Effects"
-    [xdg-desktop-portal-hyprland]="XDG desktop portal backend for Hyprland"    
+    [xdg-desktop-portal-hyprland]="XDG desktop portal backend for Hyprland"
+    [swaylock]="Locking utility"
+    [swaylock-effects]="Swaylock with fancy effects"
+    [wlogout]="Wayland logout menu"
     [gtk3]="GTK+ 3 toolkit"
+    [gtk2-engines-murrine]="GTK+ theme tools for custom theme support "
+    [gnome-themes-extra ]="All gnome themes that don't come with arch"
     [polkit-gnome]="Polkit GNOME authentication agent"
     [timeshift]="System restore utility"
     [jq]="JSON processor"
-    [wl-clipboard]="Clipboard manager for Wayland"
-    [cliphist]="Clipboard history manager"
     [python-requests]="Python HTTP library"
     [pacman-contrib]="Pacman utilities"
     [brightnessctl]="CLI tool to control screen brightness"
@@ -137,8 +140,8 @@ declare -A install_stage=(
 )
 
 declare -A optional_stage=(
-    [swaylock-effects]="Swaylock with fancy effects"
-    [wlogout]="Wayland logout menu"
+    [wl-clipboard]="Clipboard manager for Wayland"
+    [cliphist]="Clipboard history manager"
     [papirus-icon-theme]="Icon theme for Linux"
     [lxappearance]="GTK+ theme switcher"
     [xfce4-settings]="Settings manager for Xfce"
@@ -158,9 +161,86 @@ CAC="[\e[1;33mACTION\e[0m]"
 INSTLOG="install.log"
 
 ######
+function setup_dark_theme() {
+    # Environment Variables
+    PROFILE_FILE="$HOME/.profile"
+    XPROFILE_FILE="$HOME/.xprofile"
+    
+    # GTK Settings
+    GTK3_SETTINGS_FILE="$HOME/.config/gtk-3.0/settings.ini"
+    GTK4_SETTINGS_FILE="$HOME/.config/gtk-4.0/settings.ini"
+    GTK_THEME="Matrix_OLED"
+    
+    # Qt Settings
+    QT5CT_CONFIG_FILE="$HOME/.config/qt5ct/qt5ct.conf"
+    
+    # Add environment variables to .profile and .xprofile
+    for file in "$PROFILE_FILE" "$XPROFILE_FILE"; do
+        grep -qxF "export GTK_THEME=$GTK_THEME" "$file" || echo "export GTK_THEME=$GTK_THEME" >> "$file"
+        grep -qxF "export QT_QPA_PLATFORMTHEME=qt5ct" "$file" || echo "export QT_QPA_PLATFORMTHEME=qt5ct" >> "$file"
+        grep -qxF "export QT_STYLE_OVERRIDE=$GTK_THEME" "$file" || echo "export QT_STYLE_OVERRIDE=$GTK_THEME" >> "$file"
+        grep -qxF "export XDG_CURRENT_DESKTOP=Unity:Unity7:GNOME" "$file" || echo "export XDG_CURRENT_DESKTOP=Unity:Unity7:GNOME" >> "$file"
+    done
+    
+    # GTK Settings
+    mkdir -p "$HOME/.config/gtk-3.0"
+    mkdir -p "$HOME/.config/gtk-4.0"
+    
+    echo -e "[Settings]\ngtk-application-prefer-dark-theme=1\ngtk-theme-name=$GTK_THEME" > "$GTK3_SETTINGS_FILE"
+    echo -e "[Settings]\ngtk-application-prefer-dark-theme=1\ngtk-theme-name=$GTK_THEME" > "$GTK4_SETTINGS_FILE"
+    
+    # Qt Settings
+    mkdir -p "$(dirname "$QT5CT_CONFIG_FILE")"
+    if [ ! -f "$QT5CT_CONFIG_FILE" ]; then
+        echo -e "[Appearance]\nstyle=$GTK_THEME" > "$QT5CT_CONFIG_FILE"
+    else
+        sed -i "s/^style=.*/style=$GTK_THEME/" "$QT5CT_CONFIG_FILE"
+    fi
+    
+    # Call function to install custom GTK theme
+    install_custom_theme
+    
+    echo "Dark theme setup completed. Please log out and log back in to apply the changes."
+}
+
+function install_custom_theme() {
+    THEME_NAME="Matrix_OLED"
+    THEME_DIR="$HOME/.themes/$THEME_NAME"
+    CONFIGS_DIR="$HOME/.config/configs/gtk"
+
+    # Create directories for GTK themes
+    mkdir -p "$THEME_DIR/gtk-3.0"
+    mkdir -p "$THEME_DIR/gtk-4.0"
+    mkdir -p "$THEME_DIR/gtk-2.0"
+
+    # Copy gtk30.css to GTK3 directory
+    cp -f "$CONFIGS_DIR/gtk30.css" "$THEME_DIR/gtk-3.0/gtk.css"
+
+    # Copy gtk40.css to GTK4 directory
+    cp -f "$CONFIGS_DIR/gtk40.css" "$THEME_DIR/gtk-4.0/gtk.css"
+
+    # Copy gtkrc20 to GTK2 directory
+    cp -f "$CONFIGS_DIR/gtkrc20" "$THEME_DIR/gtk-2.0/gtkrc"
+
+    # Create directories for GTK settings
+    mkdir -p "$HOME/.config/gtk-3.0"
+    mkdir -p "$HOME/.config/gtk-4.0"
+
+    # Copy settings.ini to GTK3 settings directory
+    cp -f "$CONFIGS_DIR/settings.ini" "$HOME/.config/gtk-3.0/settings.ini"
+
+    # Copy settings.ini to GTK4 settings directory
+    cp -f "$CONFIGS_DIR/settings.ini" "$HOME/.config/gtk-4.0/settings.ini"
+
+    # Set GTK_THEME environment variable
+    echo "export GTK_THEME=$THEME_NAME" >> "$HOME/.profile"
+    echo "export GTK_THEME=$THEME_NAME" >> "$HOME/.bashrc" # or ~/.zshrc, depending on your shell
+
+    echo "Created and applied the $THEME_NAME theme."
+}
 
 # function that would show a progress bar to the user
-show_progress() {
+function show_progress() {
     while ps | grep $1 &> /dev/null;
     do
         echo -n "."
@@ -170,7 +250,7 @@ show_progress() {
     sleep 2
 }
 
-install_software() {
+function install_software() {
     declare -n packages=$1  # Use nameref to reference the dictionary passed as argument
     packages_to_install=""
     
@@ -199,7 +279,7 @@ install_software() {
 }
 
 # Function to make all files in the specified directory executable
-make_scripts_executable() {
+function make_scripts_executable() {
     local script_dir="$1"
 
     # Check if the directory exists
@@ -217,11 +297,16 @@ make_scripts_executable() {
     done
 }
 
+function setup_darktheme_gtk_qt() {
+export GTK_THEME=Adwaita:dark
+
+}
+
 # clear the screen
 clear
 
 echo -e "$CNT - Setup starting..."
-sudo touch /tmp/configs.tmp
+# sudo touch /tmp/configs.tmp
 
 # attempt to discover if this is a VM or not
 echo -e "$CNT - Checking for Physical or VM..."
@@ -334,6 +419,9 @@ cp -r -f -d -u ~/.config/configs/gtktheme/Arc-BLACKEST ~/.themes/
 xfconf-query -c xsettings -p /Net/ThemeName -s "BWnB-GTK"
 xfconf-query -c xsettings -p /Net/IconThemeName -s "BWnB-GTK"
 xfconf-query -c xsettings -p /Gtk/CursorThemeName -s "BWnB-GTK"
+
+setup_dark_theme
+install_custom_theme
 
 
 # add the Nvidia env file to the config (if needed)

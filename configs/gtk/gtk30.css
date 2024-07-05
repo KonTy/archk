@@ -1,0 +1,19 @@
+* {
+    background-color: #000000;
+    color: #00FF00; /* Bright Green */
+    border-color: #00FF00; /* Bright Green */
+}
+
+window, 
+dialog, 
+headerbar,
+notebook tab {
+    background-color: #000000;
+    color: #00FF00; /* Bright Green */
+}
+
+entry,
+textview {
+    background-color: #000000;
+    color: #00FF00; /* Bright Green */
+}

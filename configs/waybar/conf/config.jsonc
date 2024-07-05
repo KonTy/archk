@@ -40,6 +40,9 @@
             "default": ""  // Font Awesome icon for default state
         }
     },
+    "modules-center": [
+        "window"
+    ],
     "modules-right": [
         "mpd",
         "pulseaudio",

@@ -1,0 +1,11 @@
+style "default" {
+    bg[NORMAL] = "#000000"
+    fg[NORMAL] = "#00FF00" /* Bright Green */
+    base[NORMAL] = "#000000"
+    text[NORMAL] = "#00FF00" /* Bright Green */
+    engine "murrine" {
+        textstyle = 1
+    }
+}
+widget_class "*" style "default"
+gtk-theme-name="Matrix_OLED"
