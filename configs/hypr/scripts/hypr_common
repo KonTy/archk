@@ -67,22 +67,19 @@ function set_current_background() {
     fi
 }
 
-# Define an array of hex color codes from navy to orange to red
+# Define an array of hex color codes from bright green to dark green
 colors=(
-    "0xff000080" # Navy
-    "0xff00008b" # DarkBlue
-    "0xff0000cd" # MediumBlue
-    "0xff0000ff" # Blue
-    "0xff1e90ff" # DodgerBlue
-    "0xff00bfff" # DeepSkyBlue
-    "0xff00ffff" # Aqua
-    "0xff7fffd4" # Aquamarine
-    "0xff7cfc00" # LawnGreen
-    "0xffffa500" # Orange
-    "0xffff8c00" # DarkOrange
-    "0xffff4500" # OrangeRed
-    "0xffff0000" # Red
-    "0xffdc143c" # Crimson
+    "0xff00ff00" # Bright Green
+    "0xff00ee00" # Green
+    "0xff00dd00" # Slightly Darker Green
+    "0xff00cc00" # Slightly Darker Green
+    "0xff00bb00" # Slightly Darker Green
+    "0xff00aa00" # Slightly Darker Green
+    "0xff009900" # Slightly Darker Green
+    "0xff008800" # Slightly Darker Green
+    "0xff007700" # Slightly Darker Green
+    "0xff006600" # Slightly Darker Green
+    "0xff005500" # Dark Green
 )
 
 function random_hex() {
@@ -94,11 +91,11 @@ function random_hex() {
 function set_random_border() {
     hyprctl keyword general:col.active_border \
         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
-        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 270deg
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
     
     hyprctl keyword general:col.inactive_border \
         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
-        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 270deg
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
 }
 
 
