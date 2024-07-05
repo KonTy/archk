@@ -75,29 +75,6 @@ function set_current_background_hypr() {
     fi
 }
 
-# function set_current_background_swww() {
-#     # Directory containing the background images
-#     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
-
-#     # Log function call
-#     logger -t hypr "hypr: set_current_background called"
-
-#     # Select a random .jpg file from the directory
-#     randombackground=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
-
-#     # Check if a background image was selected
-#     if [ -n "$randombackground" ]; then
-#         logger -t hypr "hypr: Running swww img $randombackground"
-
-#         swww img "$randombackground" --transition-fps 60 --transition-type wipe --transition-duration 2
-#         if [ $? -ne 0 ]; then
-#             logger -t hypr "hypr: swww img FAILURE $?"
-#         fi
-#     else
-#         logger -t hypr "hypr: No background selected"
-#     fi
-# }
-
 function set_current_background_swww() {
     # Directory containing the background images
     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
@@ -127,12 +104,19 @@ function set_current_background_swww() {
 }
 
 
-
+# Define an array of hex color codes from bright green to dark green
 colors=(
     "0xff00ff00" # Bright Green
+    "0xff00ee00" # Green
+    "0xff00dd00" # Slightly Darker Green
     "0xff00cc00" # Slightly Darker Green
+    "0xff00bb00" # Slightly Darker Green
+    "0xff00aa00" # Slightly Darker Green
     "0xff009900" # Slightly Darker Green
-    "0xff006600" # Dark Green
+    "0xff008800" # Slightly Darker Green
+    "0xff007700" # Slightly Darker Green
+    "0xff006600" # Slightly Darker Green
+    "0xff005500" # Dark Green
 )
 
 function random_hex() {
@@ -142,12 +126,11 @@ function random_hex() {
 }
 
 function set_random_border() {
-    logger -t hypr "hypr: color change"
-    
     hyprctl keyword general:col.active_border \
-        $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
-
-    hyprctl keyword general:col.inactive_border \
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
+    
+     hyprctl keyword general:col.inactive_border \
         ${colors[3]} 45deg
 }
 
