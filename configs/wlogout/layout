@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "swaylock",
+    "action" : " swaylock -c ~/.config/configs/swaylock/config",
     "text" : "Lock"
 }
 
