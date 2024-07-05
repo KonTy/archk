@@ -98,7 +98,6 @@ function set_current_background_hypr() {
 #     fi
 # }
 
-
 function set_current_background_swww() {
     # Directory containing the background images
     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
@@ -106,20 +105,19 @@ function set_current_background_swww() {
     # Log function call
     logger -t hypr "hypr: set_current_background called"
 
-    # Check if an argument is passed
+    # Check if a specific background image is provided
     if [ -n "$1" ]; then
-        background="$1"
-        logger -t hypr "hypr: Using provided background: $background"
+        selected_background="$BACKGROUND_DIR/$1"
     else
         # Select a random .jpg file from the directory
-        background=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
-        logger -t hypr "hypr: Using random background: $background"
+        selected_background=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
     fi
 
-    # Check if a background image was selected or provided
-    if [ -n "$background" ]; then
-        logger -t hypr "hypr: Running swww img $background"
-        swww img "$background" --transition-fps 60 --transition-type wipe --transition-duration 2
+    # Check if a background image was selected
+    if [ -n "$selected_background" ]; then
+        logger -t hypr "hypr: Running swww img $selected_background"
+
+        swww img "$selected_background" --transition-fps 60 --transition-type wipe --transition-duration 2
         if [ $? -ne 0 ]; then
             logger -t hypr "hypr: swww img FAILURE $?"
         fi
