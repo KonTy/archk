@@ -44,7 +44,7 @@ window {
 }
 
 #entry:selected {
-    background-color: #00FF00; /* Bright Green */
+    background-color: #008100; /* Bright Green */
     color: #FFFFFF; /* White */
     border-radius: 5px; /* Rounded corners */
 }
