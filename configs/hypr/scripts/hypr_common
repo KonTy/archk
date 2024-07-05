@@ -98,52 +98,43 @@ function set_current_background_swww() {
     fi
 }
 
-# # Define an array of hex color codes from bright green to dark green
-# colors=(
-#     "0xff00ff00" # Bright Green
-#     "0xff00ee00" # Green
-#     "0xff00dd00" # Slightly Darker Green
-#     "0xff00cc00" # Slightly Darker Green
-#     "0xff00bb00" # Slightly Darker Green
-#     "0xff00aa00" # Slightly Darker Green
-#     "0xff009900" # Slightly Darker Green
-#     "0xff008800" # Slightly Darker Green
-#     "0xff007700" # Slightly Darker Green
-#     "0xff006600" # Slightly Darker Green
-#     "0xff005500" # Dark Green
-# )
-
-# function random_hex() {
-#     # Select a random color from the array
-#     random_index=$((RANDOM % ${#colors[@]}))
-#     echo ${colors[$random_index]}
-# }
-
-# function set_random_border() {
-#     logger -t hypr "hypr: color change"
-#     hyprctl keyword general:col.active_border \
-#         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
-#         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
-    
-#     hyprctl keyword general:col.inactive_border \
-#         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
-#         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
-# }
-
-# Define an array of hex color codes from brighter to darker green
 colors=(
     "0xff00ff00" # Bright Green
-    "0xff00cc00" # Medium Green
-    "0xff009900" # Dark Green
+    "0xff00cc00" # Slightly Darker Green
+    "0xff009900" # Slightly Darker Green
+    "0xff006600" # Dark Green
 )
 
-function set_static_border() {
-    hyprctl keyword general:col.active_border \
-        ${colors[0]} ${colors[1]} ${colors[2]} 90deg
-    
-    hyprctl keyword general:col.inactive_border \
-        ${colors[2]} 90deg
+function random_hex() {
+    # Select a random color from the array
+    random_index=$((RANDOM % ${#colors[@]}))
+    echo ${colors[$random_index]}
 }
+
+function set_random_border() {
+    logger -t hypr "hypr: color change"
+    
+    hyprctl keyword general:col.active_border \
+        $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
+
+    hyprctl keyword general:col.inactive_border \
+        ${colors[3]} 45deg
+}
+
+# # Define an array of hex color codes from brighter to darker green
+# colors=(
+#     "0xff00ff00" # Bright Green
+#     "0xff00cc00" # Medium Green
+#     "0xff009900" # Dark Green
+# )
+
+# function set_static_border() {
+#     hyprctl keyword general:col.active_border \
+#         ${colors[0]} ${colors[1]} ${colors[2]} 90deg
+    
+#     hyprctl keyword general:col.inactive_border \
+#         ${colors[2]} 90deg
+# }
 
 
 
