@@ -26,21 +26,21 @@ tooltip label{
 }
 
 #workspaces button {
-    padding: 5px;
+    padding: 2px;
     color: #ffb291;
-    margin-right: 5px;
+    margin-right: 2px;
 }
 
 #workspaces button.active {
     color: #000000;
-    background: #a6e3a1;
-    border-radius: 10px;
+    background: #3ec500;
+    border-radius: 2px;
 }
 
 #workspaces button:hover {
     background: #11111b;
     color: #cdd6f4;
-    border-radius: 10px;
+    border-radius: 2px;
 }
 
 #custom-launch_wofi,
