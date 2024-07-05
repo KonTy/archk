@@ -10,34 +10,34 @@
         "hyprland/workspaces" 
     ],
     "hyprland/workspaces": {
-        "format": "{name} {icon}",
+        "format": "{icon} {name}",
         "tooltip": false,
         "all-outputs": true,
         "persistent_workspaces": [
             {
                 "name": "1: Browsing",
-                "icon": "🌐"
+                "icon": ""  // Font Awesome icon for browser (Firefox)
             },
             {
                 "name": "2: Multimedia",
-                "icon": "🎵"
+                "icon": ""  // Font Awesome icon for music
             },
             {
                 "name": "3: Console",
-                "icon": "💻"
+                "icon": ""  // Font Awesome icon for terminal
             },
             {
                 "name": "4: Video Editing",
-                "icon": "🎬"
+                "icon": ""  // Font Awesome icon for video
             },
             {
                 "name": "5: Misc",
-                "icon": "📂"
+                "icon": ""  // Font Awesome icon for files
             }
         ],
         "format-icons": {
-            "active": "",
-            "default": ""
+            "active": "",  // Font Awesome icon for active state
+            "default": ""  // Font Awesome icon for default state
         }
     },
     "modules-right": [
