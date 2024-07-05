@@ -1,10 +1,8 @@
 daemonize
 show-failed-attempts
 clock
-screenshot
-effect-blur=9x5
-effect-vignette=0.5:0.5
-color=000000  # Set background color to black
+effect-blur=5x5
+color=1f1d2e80
 font="Inter"
 indicator
 indicator-radius=200
@@ -32,7 +30,6 @@ bs-hl-color=31748f
 grace=2
 grace-no-mouse
 grace-no-touch
-datestr=%a, %B %e
-timestr=%I:%M %p
-fade-in=0.2
+datestr="%d.%m"
+fade-in="0.1"
 ignore-empty-password
