@@ -312,21 +312,6 @@ else
     ln -sf ~/.config/configs/waybar/conf/mesu-met.jsonc ~/.config/configs/waybar/conf/mesu.jsonc
 fi
 
-# Setup each appliaction
-# check for existing config folders and backup 
-for DIR in hypr kitty mako swaylock waybar wlogout wofi 
-do 
-    DIRPATH=~/.config/$DIR
-    if [ -d "$DIRPATH" ]; then 
-        echo -e "$CAT - Config for $DIR located, backing up."
-        mv $DIRPATH $DIRPATH-back &>> $INSTLOG
-        echo -e "$COK - Backed up $DIR to $DIRPATH-back."
-    fi
-
-    # make new empty folders
-    mkdir -p $DIRPATH &>> $INSTLOG
-done
-
 # link up the config files
 echo -e "$CNT - Setting up the new config..." 
 cp -R -u -f ~/.config/configs/hypr/* ~/.config/hypr/
@@ -337,7 +322,7 @@ ln -sf ~/.config/configs/waybar/conf/config.jsonc ~/.config/waybar/config.jsonc
 ln -sf ~/.config/configs/waybar/style/style.css ~/.config/waybar/style.css
 ln -sf ~/.config/configs/wlogout/layout ~/.config/wlogout/layout
 ln -sf ~/.config/configs/wofi/config ~/.config/wofi/config
-ln -sf ~/.config/configs/wofi/style/style-dark.css ~/.config/wofi/style.css
+ln -sf ~/.config/configs/wofi/style/style.css ~/.config/wofi/style.css
 
 sudo cp -f -u ~/.config/configs/mc/ini ~/.config/mc/ini 
 sudo cp -f -u ~/.config/configs/mc/darkened.ini /usr/share/mc/skins/darkened.ini

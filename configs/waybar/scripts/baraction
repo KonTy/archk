@@ -18,15 +18,6 @@ fi
 #show a message
 notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "switching to $MODESTR"
 
-#set the waybar theme
-ln -sf ~/.config/configs/waybar/style/$VER'-style'$SWITCHTO.css ~/.config/waybar/style.css
-
-#set the wofi theme
-ln -sf ~/.config/configs/wofi/style/$VER'-style'$SWITCHTO.css ~/.config/wofi/style.css
-
-#set the mako theme
-ln -sf ~/.config/configs/mako/conf/config$SWITCHTO ~/.config/mako/config
-
 #set the measuring unit
 if [[ $SET_MESU == "I" ]]; then
     ln -sf ~/.config/configs/waybar/conf/mesu-imp.jsonc ~/.config/configs/waybar/conf/mesu.jsonc
