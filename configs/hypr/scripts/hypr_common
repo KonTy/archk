@@ -46,7 +46,7 @@ function restart_waybar() {
 
 # journalctl -t hypr
 # journalctl | grep '^hypr:'
-function set_current_background() {
+function set_current_background_hypr() {
     # Directory containing the background images
     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
 
@@ -75,6 +75,32 @@ function set_current_background() {
     fi
 }
 
+
+function set_current_background_swww() {
+    # Directory containing the background images
+    BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
+
+    # Log function call
+    logger -t hypr "hypr: set_current_background called"
+
+    # Select a random .jpg file from the directory
+    randombackground=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
+
+    # Check if a background image was selected
+    if [ -n "$randombackground" ]; then
+        logger -t hypr "hypr: Running swww img $randombackground"
+
+        swww img "$randombackground" --transition-fps 60 --transition-type wipe --transition-duration 2
+        if [ $? -ne 0 ]; then
+            logger -t hypr "hypr: Preload command failed"
+        fi
+    else
+        logger -t hypr "hypr: No background selected"
+    fi
+}
+
+
+
 # Define an array of hex color codes from bright green to dark green
 colors=(
     "0xff00ff00" # Bright Green
@@ -97,6 +123,7 @@ function random_hex() {
 }
 
 function set_random_border() {
+    logger -t hypr "hypr: color change"
     hyprctl keyword general:col.active_border \
         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
@@ -115,9 +142,9 @@ if [[ "$1" == "vswitch" ]]; then
     #update_theme
     restart_waybar
 elif [[ "$1" == "setbg" ]]; then
-    set_current_background
+    set_current_background_swww
     # update_theme
-    #restart_waybar
+    restart_waybar
 elif [[ "$1" == "setmonitors" ]]; then
     set_monitors
     update_theme

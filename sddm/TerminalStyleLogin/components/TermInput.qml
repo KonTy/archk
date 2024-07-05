@@ -23,7 +23,7 @@ TextInput {
 	id: control
 	font.family: config.fontFamily
 	font.pointSize: config.fontSize
-	color: config.foreground
+	color: "config.foreground"
 
 	width: 500
 

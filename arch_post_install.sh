@@ -76,19 +76,23 @@ declare -A prep_stage=(
     [xfconf]="xfconf-query library"
 )
 
+# declare -A hyprpaper_stage=(
+#     [hyprpaper]="Wall paper support"
+#     [gcc]="GNU Compiler Collection"
+#     [ninja]="Small build system with a focus on speed"
+#     [wayland-protocols]="Wayland protocols"
+#     [libjpeg-turbo]="JPEG image library"
+#     [libwebp]="WebP image library"
+#     [pango]="Text layout and rendering library"
+#     [cairo]="2D graphics library"
+#     [pkgconf]="Package compiler and linker metadata toolkit"
+#     [cmake]="Cross-platform make"
+#     [libglvnd]="The GL Vendor-Neutral Dispatch library"
+#     [wayland]="Wayland display server protocol"
+# )
+
 declare -A hyprpaper_stage=(
-    [hyprpaper]="Wall paper support"
-    [gcc]="GNU Compiler Collection"
-    [ninja]="Small build system with a focus on speed"
-    [wayland-protocols]="Wayland protocols"
-    [libjpeg-turbo]="JPEG image library"
-    [libwebp]="WebP image library"
-    [pango]="Text layout and rendering library"
-    [cairo]="2D graphics library"
-    [pkgconf]="Package compiler and linker metadata toolkit"
-    [cmake]="Cross-platform make"
-    [libglvnd]="The GL Vendor-Neutral Dispatch library"
-    [wayland]="Wayland display server protocol"
+    [swww]="change background"
 )
 
 declare -A audio_stage=(
