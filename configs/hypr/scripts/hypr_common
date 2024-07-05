@@ -94,7 +94,7 @@ function set_current_background_swww() {
     if [ -n "$selected_background" ]; then
         logger -t hypr "hypr: Running swww img $selected_background"
 
-        swww img "$selected_background" 
+        swww img "$selected_background" --transition-type fade --transition-duration 0.5
         # --transition-fps 60 --transition-type left --transition-duration 0.3
         if [ $? -ne 0 ]; then
             logger -t hypr "hypr: swww img FAILURE $?"
@@ -104,6 +104,24 @@ function set_current_background_swww() {
     fi
 }
 
+function hide_active_window() {
+    # Get the active window's ID
+    ACTIVE_WINDOW=$(hyprctl activewindow -j | jq -r '.address')
+
+    # Get the active workspace of the focused monitor
+    ACTIVE_WORKSPACE=$(hyprctl monitors | grep "focused: yes" -A 1 | grep workspace | awk '{print $2}')
+
+    # Get the workspace of the active window
+    WINDOW_WORKSPACE=$(hyprctl clients | grep -A 3 "window $ACTIVE_WINDOW" | grep workspace | awk '{print $2}')
+
+    if [ "$WINDOW_WORKSPACE" == "10" ]; then
+        # Move window to the active workspace
+        hyprctl dispatch movetoworkspace "$ACTIVE_WORKSPACE" "$ACTIVE_WINDOW"
+    else
+        # Move window to workspace 10
+        hyprctl dispatch movetoworkspace 10 "$ACTIVE_WINDOW"
+    fi
+}
 
 # Define an array of hex color codes from bright green to dark green
 colors=(
@@ -139,9 +157,8 @@ function switch_keyboard() {
     hyprctl switchxkblayout $SET_KB next
 }
 
-if [[ "$1" == "vswitch" ]]; then
-    #update_theme
-    restart_waybar
+if [[ "$1" == "hideactivewin" ]]; then
+    hide_active_window
 elif [[ "$1" == "setbg" ]]; then
     set_current_background_swww "$2"
     # update_theme
