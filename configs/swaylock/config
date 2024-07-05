@@ -4,7 +4,7 @@ datestr=%a, %e of %B
 
 screenshots
 
-fade-in=0.2
+fade-in=1
 
 effect-blur=20x2
 #effect-greyscale
