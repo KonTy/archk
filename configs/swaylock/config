@@ -4,7 +4,7 @@ clock
 screenshot
 effect-blur=9x5
 effect-vignette=0.5:0.5
-color=00000080  # Set background color to black with some transparency
+color=000000  # Set background color to black
 font="Inter"
 indicator
 indicator-radius=200
