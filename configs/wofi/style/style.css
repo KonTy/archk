@@ -8,39 +8,47 @@ window {
 
 #input {
     margin: 5px;
-    border-radius: 0px;
+    border-radius: 5px; /* Rounded corners */
     border: none;
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid #00FF00; /* Bright Green */
     background-color: #000000;
-    color: white;
+    color: #00FF00; /* Bright Green */
 }
 
 #inner-box {
     background-color: #000000;
-
+    border-radius: 5px; /* Rounded corners */
 }
 
 #outer-box {
     margin: 5px;
-    padding:20px;
+    padding: 20px;
     background-color: #000000;
+    border: 2px solid #00FF00; /* Bright Green */
+    border-radius: 5px; /* Rounded corners */
 }
 
 #scroll {
+    background-color: #000000;
+    border-radius: 5px; /* Rounded corners */
 }
 
 #text {
     padding: 5px;
-    color: white;
+    color: #00FF00; /* Bright Green */
 }
 
 #entry:nth-child(even){
     background-color: #000000;
+    border-radius: 5px; /* Rounded corners */
 }
 
 #entry:selected {
-    background-color: #7be25273;
+    background-color: #00FF00; /* Bright Green */
+    color: #FFFFFF; /* White */
+    border-radius: 5px; /* Rounded corners */
 }
 
 #text:selected {
+    color: #FFFFFF; /* White */
 }
