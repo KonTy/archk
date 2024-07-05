@@ -1,3 +1,15 @@
+[Colors]
+base_color=brightgreen,black:normal=brightgreen,black:marked=yellow,black:selected=black,green:input=brightgreen,black:menu=brightgreen,black:menusel=yellow,black:menuhot=brightgreen,black:menuhotsel=brightgreen,black:dfocus=green,black:dhotnormal=brightgreen,black:dhotfocus=brightgreen,black:executable=brightmagenta,black:directory=brightgreen,black:link=brightgreen,black:device=brightgreen,black:special=brightmagenta,black:core=brightgreen,black:stalelink=brightgreen,black:editnormal=brightgreen,black
+dos-console=
+color_terminals=
+xterm=
+color_terminals=
+screen=
+cygwin=
+linux=
+screen.linux=
+xterm-256color=
+
 [Midnight-Commander]
 verbose=true
 shell_patterns=true
@@ -85,10 +97,9 @@ editor_backup_extension=~
 editor_filesize_threshold=64M
 editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
-
-skin=darkened
-
 filepos_max_saved_entries=1024
+
+skin=default
 
 [Layout]
 output_lines=0
@@ -117,12 +128,6 @@ clipboard_store=
 clipboard_paste=
 altgr_enabled=
 
-[Colors]
-base_color=linux:normal=white,black:marked=yellow,black:input=,green:menu=black:menusel=white:menuhot=red,:menuhotsel=black,red:dfocus=white,black:dhotnormal=white,black:dhotfocus=white,black:executable=,black:directory=white,black:link=white,black:device=white,black:special=white,black:core=,black:stalelink=red,black:editnormal=white,black
-
-dos-console=
-color_terminals=
-
 [Panels]
 show_mini_info=true
 kilobyte_si=false
@@ -146,15 +151,12 @@ select_flags=6
 
 simple_swap=false
 
-[Panelize]
-Find *.orig after patching=find . -name \\*.orig -print
-Modified git files=git ls-files --modified
-Find rejects after patching=find . -name \\*.rej -print
-Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm /011 \\) -o \\( -perm -02000 -a -perm /01 \\) \\) -print
-
 [terminal:dos-console]
 backspace=key_escape
 kpslash=key_escape
 
-[main]
-BackSpace = cmd_cd ..
+[Panelize]
+Modified git files=git ls-files --modified
+Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm /011 \\) -o \\( -perm -02000 -a -perm /01 \\) \\) -print
+Find *.orig after patching=find . -name \\*.orig -print
+Find rejects after patching=find . -name \\*.rej -print
