@@ -58,10 +58,18 @@ function set_current_background() {
 
     # Check if a background image was selected
     if [ -n "$randombackground" ]; then
-        logger -t hypr "hypr: Selected background: $randombackground"
+        logger -t hypr "hypr: Running preload command: hyprctl hyprpaper preload $randombackground"
         hyprctl hyprpaper preload "$randombackground"
+        if [ $? -ne 0 ]; then
+            logger -t hypr "hypr: Preload command failed"
+        fi
+
+        logger -t hypr "hypr: Running wallpaper command: hyprctl hyprpaper wallpaper ,$randombackground"
         hyprctl hyprpaper wallpaper ,"$randombackground"
-        logger -t hypr "hypr: Wallpaper set to: $randombackground"
+        if [ $? -ne 0 ]; then
+            logger -t hypr "hypr: Wallpaper command failed"
+        fi
+
     else
         logger -t hypr "hypr: No background selected"
     fi
@@ -97,18 +105,6 @@ function set_random_border() {
         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) \
         $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) 90deg
 }
-
-
-# function random_hex() {
-#     random_hex=("0xff$(openssl rand -hex 3)")
-#     echo $random_hex
-# }
-
-# function set_random_border() {
-#     random_hex
-#     hyprctl keyword general:col.active_border $(random_hex)  $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
-#     hyprctl keyword general:col.inactive_border $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
-# }
 
 
 function switch_keyboard() {
