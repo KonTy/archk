@@ -10,28 +10,15 @@
         "hyprland/workspaces" 
     ],
     "hyprland/workspaces": {
-        "disable-scroll": false,
-        "disable-scroll-wraparound": true,
-        "enable-bar-scroll": true,
-        "all-outputs": true,
+        "format": "{name}",
         "format": "{icon}",
+        "tooltip": false,
+        "all-outputs": true,
         "format-icons": {
-            "1": "",
-            "2": "爵",
-            "3": "",
-            "4": "",
-            "5": "󰭹",
-            "6": "",
-            "7": "",
-            "8": "",
-            "9": "",
-            "urgent": "",
-            "default": ""
+          "active": "",
+          "default": ""
         }
-   },
-    "modules-center": [
-        "idle_inhibitor",
-    ],
+      },
     "modules-right": [
         "mpd",
         "pulseaudio",
@@ -46,6 +33,7 @@
         "custom/myhyprv",
         "custom/power_btn",
         "custom/lock_screen",
+        "idle_inhibitor",
         "clock",
         "custom/updates"
     ],

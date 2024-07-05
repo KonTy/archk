@@ -28,7 +28,7 @@ window {
     border: 2px solid #e00000;
     color: #cdd6f4;
     font-weight: bold;
-    background-color: #1e1e2e;
+    background-color: #000000;
     border-radius: 15px;
 }
 
@@ -36,7 +36,7 @@ window {
     margin: 0px;
     border: none;
     border-radius: 15px;
-    background-color: #1e1e2e;
+    background-color: #000000;
 }
 
 #scroll {
@@ -53,11 +53,11 @@ window {
 }
 
 #text:selected {
-    color: #cdd6f4;
+    color: #ffffff;
     margin: 0px 0px;
     border: none;
     border-radius: 15px;
-    background-color: #89b4fa;
+    background-color: #1d9100;
 }
 
 #entry {
@@ -71,5 +71,5 @@ window {
     margin: 0px 0px;
     border: none;
     border-radius: 15px;
-    background-color: #89b4fa;
+    background-color: #008118;
 }
