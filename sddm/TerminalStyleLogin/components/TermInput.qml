@@ -19,33 +19,45 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-TextInput {
-	id: control
-	font.family: config.fontFamily
-	font.pointSize: config.fontSize
-	color: config.foreground
+ Column {
+	anchors.centerIn: parent
+	spacing: 10
 
-	width: 500
+	Text {
+		text: "\u1F5A5"  // Unicode for the computer symbol
+		font.pixelSize: 40
+		color: config.foreground
+		anchors.horizontalCenter: parent.horizontalCenter
+	}
 
-	cursorDelegate: Label {
-		id: cursor
+	TextInput {
+		id: control
 		font.family: config.fontFamily
 		font.pointSize: config.fontSize
 		color: config.foreground
-		text: "▁" // U+2521, lower one eighth block
 
-		Timer {
-			running: true
-			repeat: true
-			interval: 200
-			onTriggered: cursor.visible = !cursor.visible && !control.readOnly
+		width: 500
+
+		cursorDelegate: Label {
+			id: cursor
+			font.family: config.fontFamily
+			font.pointSize: config.fontSize
+			color: config.foreground
+			text: "█" // U+2521, lower one eighth block U+2588 big full block
+
+			Timer {
+				running: true
+				repeat: true
+				interval: 200
+				onTriggered: cursor.visible = !cursor.visible && !control.readOnly
+			}
+		}
+
+		onReadOnlyChanged: {
+			if (readOnly)
+			{
+				cursorVisible = false
+			}
 		}
 	}
-
-	onReadOnlyChanged: {
-		if (readOnly)
-		{
-			cursorVisible = false
-		}
-	}
-}
+ }

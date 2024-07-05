@@ -92,7 +92,7 @@ function set_current_background_swww() {
 
         swww img "$randombackground" --transition-fps 60 --transition-type wipe --transition-duration 2
         if [ $? -ne 0 ]; then
-            logger -t hypr "hypr: Preload command failed"
+            logger -t hypr "hypr: swww img FAILURE $?"
         fi
     else
         logger -t hypr "hypr: No background selected"
