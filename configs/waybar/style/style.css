@@ -31,31 +31,23 @@ tooltip label{
     background-color: #1e1e1e;
     margin-right: 3px;
     border-radius: 5px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    text-shadow: 2px 2px 4px rgba(176, 0, 0, 0.6);
     transition: background-color 0.3s ease, text-shadow 0.3s ease;
+    font-family: "Font Awesome 5 Free"; /* Specify Font Awesome */
+    font-weight: 900; /* Use the solid style */    
 }
 #workspaces button:hover {
     background-color: #ff4f81;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-}
-
-/* #workspaces button {
-    padding: 0px;
-    color: #ffb291;
-    margin-right: 3px;
+    border-radius: 5px;
+    text-shadow: 2px 2px 6px rgba(255, 88, 88, 0.8);
 }
 
 #workspaces button.active {
     color: #000000;
     background: #3ec500;
-    border-radius: 2px;
+    border-radius: 5px;
+    text-shadow: 2px 2px 6px rgba(255, 88, 88, 0.8);
 }
-
-#workspaces button:hover {
-    background: #11111b;
-    color: #cdd6f4;
-    border-radius: 2px;
-} */
 
 #custom-launch_wofi,
 #custom-launch_firefox,
