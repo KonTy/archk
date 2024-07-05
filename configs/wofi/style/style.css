@@ -30,16 +30,16 @@ window {
 }
 
 #text {
-padding: 5px;
-color: white;
+    padding: 5px;
+    color: white;
 }
 
 #entry:nth-child(even){
-    background-color: #404552;
+    background-color: #000000;
 }
 
 #entry:selected {
-    background-color: #5291e2;
+    background-color: #7be25273;
 }
 
 #text:selected {
