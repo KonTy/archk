@@ -63,7 +63,6 @@ declare -A prep_stage=(
     [swaylock]="Locking utility"
     [wlogout]="Wayland logout menu"
     [gtk3]="GTK+ 3 toolkit"
-    [gtk2-engines-murrine]="GTK+ theme tools for custom theme support "
     [gnome-themes-extra ]="All gnome themes that don't come with arch"
     [polkit-gnome]="Polkit GNOME authentication agent"
     [timeshift]="System restore utility"
@@ -139,6 +138,7 @@ declare -A install_stage=(
 )
 
 declare -A optional_stage=(
+    [gtk2-engines-murrine]="GTK+ theme tools for custom theme support "
     [swaylock-effects]="Swaylock with fancy effects"
     [wl-clipboard]="Clipboard manager for Wayland"
     [cliphist]="Clipboard history manager"
@@ -338,7 +338,7 @@ if [ ! -f /sbin/yay ]; then
         
         # update the yay database
         echo -en "$CNT - Updating yay."
-        yay -Suy --noconfirm &>> $INSTLOG &
+        yay -Suy --noconfirm --combinedupgrade --combinedupgrade &>> $INSTLOG &
         show_progress $!
         echo -e "\e[1A\e[K$COK - yay updated."
     else
