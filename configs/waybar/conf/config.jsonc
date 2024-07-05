@@ -10,15 +10,36 @@
         "hyprland/workspaces" 
     ],
     "hyprland/workspaces": {
-        "format": "{name}",
-        "format": "{icon}",
+        "format": "{name} {icon}",
         "tooltip": false,
         "all-outputs": true,
+        "persistent_workspaces": [
+            {
+                "name": "1: Browsing",
+                "icon": "🌐"
+            },
+            {
+                "name": "2: Multimedia",
+                "icon": "🎵"
+            },
+            {
+                "name": "3: Console",
+                "icon": "💻"
+            },
+            {
+                "name": "4: Video Editing",
+                "icon": "🎬"
+            },
+            {
+                "name": "5: Misc",
+                "icon": "📂"
+            }
+        ],
         "format-icons": {
-          "active": "",
-          "default": ""
+            "active": "",
+            "default": ""
         }
-      },
+    },
     "modules-right": [
         "mpd",
         "pulseaudio",
