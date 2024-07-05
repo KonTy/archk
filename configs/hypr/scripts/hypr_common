@@ -94,7 +94,7 @@ function set_current_background_swww() {
     if [ -n "$selected_background" ]; then
         logger -t hypr "hypr: Running swww img $selected_background"
 
-        swww img "$selected_background" --transition-fps 60 --transition-type wipe --transition-duration 2
+        swww img "$selected_background" --transition-fps 60 --transition-type left --transition-duration 1
         if [ $? -ne 0 ]; then
             logger -t hypr "hypr: swww img FAILURE $?"
         fi
