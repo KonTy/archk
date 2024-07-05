@@ -75,6 +75,30 @@ function set_current_background_hypr() {
     fi
 }
 
+# function set_current_background_swww() {
+#     # Directory containing the background images
+#     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
+
+#     # Log function call
+#     logger -t hypr "hypr: set_current_background called"
+
+#     # Select a random .jpg file from the directory
+#     randombackground=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
+
+#     # Check if a background image was selected
+#     if [ -n "$randombackground" ]; then
+#         logger -t hypr "hypr: Running swww img $randombackground"
+
+#         swww img "$randombackground" --transition-fps 60 --transition-type wipe --transition-duration 2
+#         if [ $? -ne 0 ]; then
+#             logger -t hypr "hypr: swww img FAILURE $?"
+#         fi
+#     else
+#         logger -t hypr "hypr: No background selected"
+#     fi
+# }
+
+
 function set_current_background_swww() {
     # Directory containing the background images
     BACKGROUND_DIR="$HOME/.config/configs/backgrounds"
@@ -82,14 +106,20 @@ function set_current_background_swww() {
     # Log function call
     logger -t hypr "hypr: set_current_background called"
 
-    # Select a random .jpg file from the directory
-    randombackground=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
+    # Check if an argument is passed
+    if [ -n "$1" ]; then
+        background="$1"
+        logger -t hypr "hypr: Using provided background: $background"
+    else
+        # Select a random .jpg file from the directory
+        background=$(find "$BACKGROUND_DIR" -type f -name '*.jpg' | shuf -n 1)
+        logger -t hypr "hypr: Using random background: $background"
+    fi
 
-    # Check if a background image was selected
-    if [ -n "$randombackground" ]; then
-        logger -t hypr "hypr: Running swww img $randombackground"
-
-        swww img "$randombackground" --transition-fps 60 --transition-type wipe --transition-duration 2
+    # Check if a background image was selected or provided
+    if [ -n "$background" ]; then
+        logger -t hypr "hypr: Running swww img $background"
+        swww img "$background" --transition-fps 60 --transition-type wipe --transition-duration 2
         if [ $? -ne 0 ]; then
             logger -t hypr "hypr: swww img FAILURE $?"
         fi
@@ -97,6 +127,8 @@ function set_current_background_swww() {
         logger -t hypr "hypr: No background selected"
     fi
 }
+
+
 
 colors=(
     "0xff00ff00" # Bright Green
@@ -121,23 +153,6 @@ function set_random_border() {
         ${colors[3]} 45deg
 }
 
-# # Define an array of hex color codes from brighter to darker green
-# colors=(
-#     "0xff00ff00" # Bright Green
-#     "0xff00cc00" # Medium Green
-#     "0xff009900" # Dark Green
-# )
-
-# function set_static_border() {
-#     hyprctl keyword general:col.active_border \
-#         ${colors[0]} ${colors[1]} ${colors[2]} 90deg
-    
-#     hyprctl keyword general:col.inactive_border \
-#         ${colors[2]} 90deg
-# }
-
-
-
 function switch_keyboard() {
     hyprctl switchxkblayout $SET_KB next
 }
@@ -146,7 +161,7 @@ if [[ "$1" == "vswitch" ]]; then
     #update_theme
     restart_waybar
 elif [[ "$1" == "setbg" ]]; then
-    set_current_background_swww
+    set_current_background_swww "$2"
     # update_theme
     restart_waybar
 elif [[ "$1" == "setmonitors" ]]; then
@@ -159,6 +174,7 @@ elif [[ "$1" == "swkb" ]]; then
 elif [[ "$1" == "setborder" ]]; then
     set_random_border
 fi
+
 
 # need to show the version and tooltip
 get_ver
