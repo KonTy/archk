@@ -1,9 +1,9 @@
 # Check if the script is run with sudo
-if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root"
-  sudo "$0" "$@"
-  exit
-fi
+# if [ "$EUID" -ne 0 ]; then
+#   echo "Please run as root"
+#   sudo "$0" "$@"
+#   exit
+# fi
 
 # Change to the directory where this script is located
 cd "$(dirname "$0")"
