@@ -298,11 +298,6 @@ function make_scripts_executable() {
     done
 }
 
-function setup_darktheme_gtk_qt() {
-export GTK_THEME=Adwaita:dark
-
-}
-
 # clear the screen
 clear
 
