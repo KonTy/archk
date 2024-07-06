@@ -35,13 +35,13 @@ function update_theme() {
 }
 
 function get_ver() {
-    VER=$(readlink -f ~/.config/waybar/config.jsonc | cut -d '-' -f1 | cut -d '/' -f8)
+    VER=$(readlink -f ~/.config/waybar/config | cut -d '-' -f1 | cut -d '/' -f8)
 }
 
 function restart_waybar() {
     #restart the waybar
     pkill waybar
-    waybar --config ~/.config/configs/waybar/conf/config.jsonc
+    waybar --config ~/.config/configs/waybar/config
 }
 
 # journalctl -t hypr
@@ -162,14 +162,14 @@ if [[ "$1" == "hideactivewin" ]]; then
 elif [[ "$1" == "setbg" ]]; then
     set_current_background_swww "$2"
     # update_theme
-    restart_waybar
+    #restart_waybar
 elif [[ "$1" == "setmonitors" ]]; then
     set_monitors
     update_theme
-    restart_waybar
+    #restart_waybar
 elif [[ "$1" == "swkb" ]]; then
     switch_keyboard
-    restart_waybar
+    #restart_waybar
 elif [[ "$1" == "setborder" ]]; then
     set_random_border
 fi
