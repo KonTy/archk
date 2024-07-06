@@ -61,7 +61,7 @@ declare -A prep_stage=(
     [qt5-quickcontrols2]="Qt5 Quick Controls 2"
     [qt5-graphicaleffects]="Qt5 Graphical Effects"
     [xdg-desktop-portal-hyprland]="XDG desktop portal backend for Hyprland"
-    [swaylock]="Locking utility"
+    [swaylock-effects]="Locking utility"
     [wlogout]="Wayland logout menu"
     [gtk3]="GTK+ 3 toolkit"
     [gnome-themes-extra ]="All gnome themes that don't come with arch"
@@ -140,7 +140,6 @@ declare -A install_stage=(
 
 declare -A optional_stage=(
     [gtk2-engines-murrine]="GTK+ theme tools for custom theme support "
-    [swaylock-effects]="Swaylock with fancy effects"
     [wl-clipboard]="Clipboard manager for Wayland"
     [cliphist]="Clipboard history manager"
     [papirus-icon-theme]="Icon theme for Linux"
