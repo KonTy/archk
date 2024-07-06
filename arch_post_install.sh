@@ -77,6 +77,7 @@ declare -A prep_stage=(
     [network-manager-applet]="Applet for managing network connections"
     [btop]="Resource monitor that shows usage and stats"
     [xfconf]="xfconf-query library"
+    [wlrctl]="Get window title"
 )
 
 declare -A hyprpaper_stage=(

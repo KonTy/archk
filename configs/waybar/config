@@ -5,7 +5,7 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "height": 20,
+    "height": 33,
     "modules-left": [
         "hyprland/workspaces" 
     ],
@@ -41,8 +41,22 @@
         }
     },
     "modules-center": [
-        "window"
-    ]
+        "custom/window_title"
+    ],
+    "custom/window_title": {
+        "exec": "wlrctl title",
+        "interval": 1,
+        "format": "{output}",
+        "tooltip": false
+    },
+    "style": {
+        "custom/window_title": {
+            "font-size": "14px",
+            "color": "#ffffff",
+            "padding": "0 10px"
+        }
+    }
+    
     // "modules-right": [
     //     "mpd",
     //     "pulseaudio",
