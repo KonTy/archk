@@ -62,6 +62,7 @@ declare -A prep_stage=(
     [qt5-graphicaleffects]="Qt5 Graphical Effects"
     [xdg-desktop-portal-hyprland]="XDG desktop portal backend for Hyprland"
     [swaylock-effects]="Locking utility"
+    [swayidle]="Auto lock machine"
     [wlogout]="Wayland logout menu"
     [gtk3]="GTK+ 3 toolkit"
     [gnome-themes-extra ]="All gnome themes that don't come with arch"
