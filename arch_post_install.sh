@@ -386,12 +386,12 @@ cp -R -u configs ~/.config/
 echo -e "$CNT - Attempring to set mesuring unit..."
 if locale -a | grep -q ^en_US; then
     echo -e "$COK - Setting mesuring system to imperial..."
-    ln -sf ~/.config/configs/waybar/conf/mesu-imp.jsonc ~/.config/configs/waybar/conf/mesu.jsonc
+    ln -sf ~/.config/configs/waybar/mesu-imp.jsonc ~/.config/configs/waybar/mesu.jsonc
     sed -i 's/SET_MESU=""/SET_MESU="I"/' ~/.config/configs/hyprv.conf
 else
     echo -e "$COK - Setting mesuring system to metric..."
     sed -i 's/SET_MESU=""/SET_MESU="M"/' ~/.config/configs/hyprv.conf
-    ln -sf ~/.config/configs/waybar/conf/mesu-met.jsonc ~/.config/configs/waybar/conf/mesu.jsonc
+    ln -sf ~/.config/configs/waybar/mesu-met.jsonc ~/.config/configs/waybar/mesu.jsonc
 fi
 
 # link up the config files
@@ -400,8 +400,8 @@ cp -R -u -f ~/.config/configs/hypr/* ~/.config/hypr/
 ln -sf ~/.config/configs/kitty/kitty.conf ~/.config/kitty/kitty.conf
 ln -sf ~/.config/configs/mako/conf/config ~/.config/mako/config
 ln -sf ~/.config/configs/swaylock/config ~/.config/swaylock/config
-ln -sf ~/.config/configs/waybar/conf/config.jsonc ~/.config/waybar/config.jsonc
-ln -sf ~/.config/configs/waybar/style/style.css ~/.config/waybar/style.css
+ln -sf ~/.config/configs/waybar/config ~/.config/waybar/config
+ln -sf ~/.config/configs/waybar/style.css ~/.config/waybar/style.css
 ln -sf ~/.config/configs/wlogout/layout ~/.config/wlogout/layout
 ln -sf ~/.config/configs/wofi/config ~/.config/wofi/config
 ln -sf ~/.config/configs/wofi/style/style.css ~/.config/wofi/style.css
