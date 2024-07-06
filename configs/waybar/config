@@ -41,22 +41,8 @@
         }
     },
     "modules-center": [
-        "custom/window_title"
+        "hyprland/window"
     ],
-    "custom/window_title": {
-        "exec": "wlrctl title",
-        "interval": 1,
-        "format": "{output}",
-        "tooltip": false
-    },
-    "style": {
-        "custom/window_title": {
-            "font-size": "14px",
-            "color": "#ffffff",
-            "padding": "0 10px"
-        }
-    }
-    
     // "modules-right": [
     //     "mpd",
     //     "pulseaudio",
