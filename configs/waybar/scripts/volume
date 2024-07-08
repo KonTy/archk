@@ -38,16 +38,8 @@ output_waybar() {
     local volume=$(get_volume)
     local icon=$(get_icon)
     
-    echo "{\"text\": \"$icon $volume%\", \"class\": \"volume\"}"
+    echo "{\"text\": \"' $icon ' $volume%\", \"class\": \"volume\"}"
     echo "Debug: Icon=$icon Volume=$volume%" >> /tmp/waybar-volume-debug.log
-}
-
-# Monitor volume changes and output to Waybar
-monitor_volume() {
-    while true; do
-        output_waybar
-        sleep 1
-    done
 }
 
 # Increase Volume
@@ -136,5 +128,5 @@ elif [[ "$1" == "--mic-inc" ]]; then
 elif [[ "$1" == "--mic-dec" ]]; then
     dec_mic_volume
 else
-    monitor_volume
+    output_waybar
 fi
