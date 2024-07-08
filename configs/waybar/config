@@ -163,18 +163,19 @@
     "custom/volume": {
         "exec": "~/.config/configs/waybar/scripts/volume",
         "interval": 1,
-        "format": "{output}",
-        "tooltip": false,
+        "format": "{text}",
+        "tooltip": true,
         "on-click": "pavucontrol",
         "on-click-right": "~/.config/configs/waybar/scripts/volume --toggle",
         "on-scroll-up": "~/.config/configs/waybar/scripts/volume --inc",
         "on-scroll-down": "~/.config/configs/waybar/scripts/volume --dec"
       },
-      "style": {
+     "style": {
         "custom/volume": {
-          "font-size": "14px",
-          "color": "#ffffff",
-          "padding": "0 10px"
+        "font-family": "FontAwesome",
+        "font-size": "14px",
+        "color": "#ffffff",
+        "padding": "0 10px"
         }
       },
 
