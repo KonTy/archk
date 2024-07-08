@@ -137,12 +137,12 @@ declare -A install_stage=(
     [brave-bin]="Brave browser"
     [mpv]="Media player"
     [fastfetch]="Show system info"
+    [wl-clipboard]="Clipboard manager for Wayland"
+    [clipman]="Clipboard manager with ability to keep onlh one item, use cliphist if you want more"
 )
 
 declare -A optional_stage=(
     [gtk2-engines-murrine]="GTK+ theme tools for custom theme support "
-    [wl-clipboard]="Clipboard manager for Wayland"
-    [cliphist]="Clipboard history manager"
     [papirus-icon-theme]="Icon theme for Linux"
     [lxappearance]="GTK+ theme switcher"
     [xfce4-settings]="Settings manager for Xfce"
@@ -240,6 +240,20 @@ function install_custom_theme() {
     echo "Created and applied the $THEME_NAME theme."
 }
 
+function add_if_not_exists() {
+    local line="$1"
+    local file="$2"
+    
+    # Check if the file contains the line
+    if ! grep -Fxq "$line" "$file"; then
+        # If not, add the line to the file
+        echo -e "\n$line" >> "$file"
+        echo "Added '$line' to $file"
+    else
+        echo "Line '$line' already exists in $file"
+    fi
+}
+
 # function that would show a progress bar to the user
 function show_progress() {
     while ps | grep $1 &> /dev/null;
@@ -248,7 +262,7 @@ function show_progress() {
         sleep 2
     done
     echo -en "Done!\n"
-    sleep 2
+sleep 2
 }
 
 function install_software() {
@@ -416,8 +430,8 @@ xfconf-query -c xsettings -p /Net/ThemeName -s "BWnB-GTK"
 xfconf-query -c xsettings -p /Net/IconThemeName -s "BWnB-GTK"
 xfconf-query -c xsettings -p /Gtk/CursorThemeName -s "BWnB-GTK"
 
-setup_dark_theme
-install_custom_theme
+#setup_dark_theme
+#install_custom_theme
 
 
 # add the Nvidia env file to the config (if needed)
@@ -464,12 +478,12 @@ make_scripts_executable "$HOME/.config/configs/hypr/scripts"
 ### Install the starship shell ###
 echo -e "$CNT - Install Starship"
 echo -e "$CNT - Updating .bashrc..."
-echo -e '\neval "$(starship init bash)"' >> ~/.bashrc
-echo -e '\neval "$(starship init zsh)"' >> ~/.zshrc
+
+add_if_not_exists 'eval "$(starship init bash)"' ~/.bashrc
+add_if_not_exists 'eval "$(starship init zsh)"' ~/.zshrc
 echo -e "$CNT - copying starship config file to ~/.config ..."
 mkdir -p ~/.config
 cp -f -u configs/starship/starship.toml ~/.config/
-
 
 ### Script is done ###
 echo -e "$CNT - Script had completed!"

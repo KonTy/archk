@@ -10,27 +10,22 @@
         "hyprland/workspaces" 
     ],
     "hyprland/workspaces": {
-        "format": "{icon} {name}",
-        "tooltip": false,
-        "all-outputs": true,
-        "disable-scroll": true,
+       // "format": "{icon} {name}",
+        "on-scroll-up": "hyprctl dispatch workspace r-1",
+        "on-scroll-down": "hyprctl dispatch workspace r+1",        
         "on-click": "activate",
-        "persistent_workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": [],
-            "10": []
-        }      
-        // "format-icons": {
-        //     "active": "",  // Font Awesome icon for active state
-        //     "default": ""  // Font Awesome icon for default state
-        // }
+        "active-only": false,
+        "all-outputs": true,
+        "format": "{}",
+        "format-icons": {
+			"urgent": "",
+			"active": "",
+			"default": ""
+        },
+        "persistent-workspaces": {
+            "*": 5
+        }       
+
     },
     "modules-center": [
         "hyprland/window"
@@ -41,9 +36,9 @@
         //"tray",
         //"battery",
         //"bluetooth",
-        //"network", 
+        "network", 
         //"hyprland/language",
-        //"custom/myhyprv",
+       // "custom/myhyprv",
         //"custom/power_btn",
         //"custom/lock_screen",
 //        "custom/updates",
@@ -52,6 +47,19 @@
         "pulseaudio#microphone",
         "clock"        
     ],
+   "clock": {
+        "format": "{:%H:%M}  ",
+        "format-alt": "{:%A, %B %d, %Y (%R)}  ",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "calendar-weeks-pos": "right",
+        "today-format": "<span color='#ff6699'><b><u>{}</u></b></span>",
+        "format-calendar": "<span color='#ecc6d9'><b>{}</b></span>",
+        "format-calendar-weeks": "<span color='#99ffdd'><b>W{:%V}</b></span>",
+        "format-calendar-weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "on-scroll": {
+                    "calendar": 1
+                     }
+    },
     "network": {
         "interface": "enp0s31f6",
         "interval": 1,
@@ -171,6 +179,16 @@
         "tooltip": true,
         "tooltip-format": "{icon} at {volume}%"
     },
+
+    // "pulseaudio": {
+    //     "format": "{volume}% {icon}",
+    //     "format-muted": "{volume}% ",
+    //     "format-icons": {
+    //         "default": ["\uf026", "\uf027", "\uf028"]
+    //     },
+    //     "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    //     "on-click-right": "pavucontrol"
+    // },
 
     "pulseaudio#microphone": {
         "format": "{format_source}",

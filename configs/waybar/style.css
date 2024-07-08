@@ -3,7 +3,7 @@
     border-radius: 0;
     font-family: "JetBrainsMono Nerd Font";
     font-weight: bold;
-    font-size: 16px;
+    font-size: 12px;
     min-height: 0;
 }
 
@@ -25,16 +25,36 @@ tooltip label{
     color: #ffa24b;
 }
 
-#workspaces button {
+/* #workspaces button {
     padding: 5px 10px;
-    color: #ffb291;
+    color: #91d7ff;
     background-color: #1e1e1e;
     margin-right: 3px;
+    "tooltip": false,
+        "all-outputs": true,
+        "disable-scroll": true,
+        "on-click": "activate",
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": [],
+            "10": []
+        },     
+        "format-icons": {
+            "active": "",  // Font Awesome icon for active state
+            "default": ""  // Font Awesome icon for default state
+        }
     border-radius: 5px;
     text-shadow: 2px 2px 4px rgba(176, 0, 0, 0.6);
-    transition: background-color 0.3s ease, text-shadow 0.3s ease;
-    font-family: "Font Awesome 5 Free"; /* Specify Font Awesome */
-    font-weight: 900; /* Use the solid style */    
+  //  transition: background-color 0.3s ease, text-shadow 0.3s ease;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
 }
 #workspaces button:hover {
     background-color: #ff4f81;
@@ -47,6 +67,27 @@ tooltip label{
     background: #3ec500;
     border-radius: 5px;
     text-shadow: 2px 2px 6px rgba(255, 88, 88, 0.8);
+} */
+
+#workspaces button {
+    background-color: #5f676a;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    background: rgba(0,0,0,0.2);
+}
+
+#workspaces button.focused {
+    background-color: #285577;
+}
+
+#workspaces button.urgent {
+    background-color: #900000;
+}
+
+#workspaces button.active {
+    background-color: #285577;
 }
 
 #custom-launch_wofi,
