@@ -6,19 +6,18 @@ get_volume() {
 }
 
 # Function to get current icon based on volume and mute status
-# Function to get current icon based on volume and mute status
 get_icon() {
     local volume=$(get_volume)
     local mute=$(pamixer --get-mute)
     
     if [ "$mute" = "true" ]; then
-        echo ""  # Mute icon
+        echo ""  # Mute icon
     elif [ "$volume" -eq 0 ]; then
-        echo ""  # Mute icon
+        echo ""  # Mute icon
     elif [ "$volume" -lt 33 ]; then
         echo ""  # Low volume icon
     elif [ "$volume" -lt 67 ]; then
-        echo ""  # Medium volume icon
+        echo ""  # Medium volume icon
     else
         echo ""  # High volume icon
     fi
@@ -38,25 +37,23 @@ output_waybar() {
     local volume=$(get_volume)
     local icon=$(get_icon)
     
-    echo "{\"text\": \"' $icon ' $volume%\", \"class\": \"volume\"}"
-    echo "Debug: Icon=$icon Volume=$volume%" >> /tmp/waybar-volume-debug.log
+    local output="{\"text\": \"$icon $volume%\", \"class\": \"volume\"}"
+    echo "$output" >> /tmp/waybar-volume-debug.log  # Debugging output
+    echo "$output"
 }
 
 # Increase Volume
 inc_volume() {
-    logger -t hypr "Konty: inc_volume is called"
     pamixer -i 5 && notify_user
 }
 
 # Decrease Volume
 dec_volume() {
-    logger -t hypr "Konty: dec_volume is called"
     pamixer -d 5 && notify_user
 }
 
 # Toggle Mute
 toggle_mute() {
-    echo "$(date) - toggle_mute triggered with arguments: $@" >> /tmp/waybar.log
     if [ "$(pamixer --get-mute)" == "false" ]; then
         pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify \
             -u low -i "" "Volume Switched OFF"
@@ -68,12 +65,11 @@ toggle_mute() {
 
 # Toggle Mic
 toggle_mic() {
-    echo "$(date) - toggle_mic triggered with arguments: $@" >> /tmp/waybar.log
     if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
         pamixer --default-source -m && notify-send -h string:x-canonical-private-synchronous:sys-notify \
             -u low -i "" "Microphone Switched OFF"
     elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-        pamixer -u --default-source && notify-send -h string:x-canonical-private-synchronous:sys-notify \
+        pamixer --default-source -u && notify-send -h string:x-canonical-private-synchronous:sys-notify \
             -u low -i "" "Microphone Switched ON"
     fi
 }
@@ -111,7 +107,6 @@ dec_mic_volume() {
 if [[ "$1" == "--get" ]]; then
     get_volume
 elif [[ "$1" == "--inc" ]]; then
-    logger -t hypr "Konty: --inc is called"
     inc_volume
 elif [[ "$1" == "--dec" ]]; then
     dec_volume

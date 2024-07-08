@@ -160,24 +160,27 @@
     },
 
 
-    "custom/volume": {
-        "exec": "~/.config/configs/waybar/scripts/volume",
-        "interval": 1,
-        "format": "{text}",
-        "tooltip": true,
-        "on-click": "pavucontrol",
-        "on-click-right": "~/.config/configs/waybar/scripts/volume --toggle",
-        "on-scroll-up": "~/.config/configs/waybar/scripts/volume --inc",
-        "on-scroll-down": "~/.config/configs/waybar/scripts/volume --dec"
-      },
-     "style": {
+
         "custom/volume": {
-        "font-family": "Font Awesome 5 Free",
-        "font-size": "14px",
-        "color": "#ffffff",
-        "padding": "0 10px"
-        }
-      },
+          "exec": "~/.config/configs/waybar/scripts/volume",
+          "interval": 1,
+          "format": "{text}",
+          "tooltip": true,
+          "on-click": "pavucontrol",
+          "on-click-right": "~/.config/configs/waybar/scripts/volume --toggle",
+          "on-scroll-up": "~/.config/configs/waybar/scripts/volume --inc",
+          "on-scroll-down": "~/.config/configs/waybar/scripts/volume --dec"
+        },
+        "style": {
+          "custom/volume": {
+            "font-family": "Font Awesome 5 Free",
+            "font-size": "14px",
+            "color": "#ffffff",
+            "padding": "0 10px"
+          }
+        },
+
+      
 
     // "pulseaudio": {
     //     "format": "{icon}",
