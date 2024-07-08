@@ -6,20 +6,21 @@ get_volume() {
 }
 
 # Function to get current icon based on volume and mute status
+# Function to get current icon based on volume and mute status
 get_icon() {
     local volume=$(get_volume)
     local mute=$(pamixer --get-mute)
     
     if [ "$mute" = "true" ]; then
-        echo ""
+        echo ""  # Mute icon
     elif [ "$volume" -eq 0 ]; then
-        echo ""
+        echo ""  # Mute icon
     elif [ "$volume" -lt 33 ]; then
-        echo ""
+        echo ""  # Low volume icon
     elif [ "$volume" -lt 67 ]; then
-        echo ""
+        echo ""  # Medium volume icon
     else
-        echo ""
+        echo ""  # High volume icon
     fi
 }
 
@@ -38,6 +39,7 @@ output_waybar() {
     local icon=$(get_icon)
     
     echo "{\"text\": \"$icon $volume%\", \"class\": \"volume\"}"
+    echo "Debug: Icon=$icon Volume=$volume%" >> /tmp/waybar-volume-debug.log
 }
 
 # Monitor volume changes and output to Waybar

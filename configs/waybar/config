@@ -172,7 +172,7 @@
       },
      "style": {
         "custom/volume": {
-        "font-family": "FontAwesome",
+        "font-family": "Font Awesome 5 Free",
         "font-size": "14px",
         "color": "#ffffff",
         "padding": "0 10px"
