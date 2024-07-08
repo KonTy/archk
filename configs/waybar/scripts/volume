@@ -37,7 +37,8 @@ output_waybar() {
     local volume=$(get_volume)
     local icon=$(get_icon)
     
-    local output="{\"text\": \"$icon $volume%\", \"class\": \"volume\"}"
+    #local output="{\"text\": \"$icon $volume%\", \"class\": \"volume\"}"
+	local output="{\"text\": \"$icon\", \"class\": \"volume\"}"
     echo "$output" >> /tmp/waybar-volume-debug.log  # Debugging output
     echo "$output"
 }
