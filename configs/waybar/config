@@ -159,26 +159,45 @@
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
     },
 
-    "pulseaudio": {
-        "format": "{icon}",
-        "format-muted": "",
-        "on-click": "~/.config/configs/waybar/scripts/volume --toggle",
-        "on-click-right": "pavucontrol",
+
+    "custom/volume": {
+        "exec": "~/.config/configs/waybar/scripts/volume",
+        "interval": 1,
+        "format": "{output}",
+        "tooltip": false,
+        "on-click": "pavucontrol",
+        "on-click-right": "~/.config/configs/waybar/scripts/volume --toggle",
         "on-scroll-up": "~/.config/configs/waybar/scripts/volume --inc",
-        "on-scroll-down": "~/.config/configs/waybar/scripts/volume --dec",
-        "scroll-step": 5,
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "tooltip": true,
-        "tooltip-format": "{icon} at {volume}%"
-    },
+        "on-scroll-down": "~/.config/configs/waybar/scripts/volume --dec"
+      },
+      "style": {
+        "custom/volume": {
+          "font-size": "14px",
+          "color": "#ffffff",
+          "padding": "0 10px"
+        }
+      }
+
+    // "pulseaudio": {
+    //     "format": "{icon}",
+    //     "format-muted": "",
+    //     "on-click": "~/.config/configs/waybar/scripts/volume --toggle",
+    //     "on-click-right": "pavucontrol",
+    //     "on-scroll-up": "~/.config/configs/waybar/scripts/volume --inc",
+    //     "on-scroll-down": "~/.config/configs/waybar/scripts/volume --dec",
+    //     "scroll-step": 5,
+    //     "format-icons": {
+    //         "headphone": "",
+    //         "hands-free": "",
+    //         "headset": "",
+    //         "phone": "",
+    //         "portable": "",
+    //         "car": "",
+    //         "default": ["", "", ""]
+    //     },
+    //     "tooltip": true,
+    //     "tooltip-format": "{icon} at {volume}%"
+    // },
 
     // "pulseaudio": {
     //     "format": "{volume}% {icon}",

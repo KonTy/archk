@@ -1,117 +1,138 @@
 #!/bin/bash
 
-# iconsDir="$HOME/.config/configs/mako/icons"
-
-# Get Volume
+# Function to get current volume using pamixer
 get_volume() {
-	volume=$(pamixer --get-volume)
-	echo "$volume"
+    pamixer --get-volume
 }
 
+# Function to get current icon based on volume and mute status
 get_icon() {
-	logger -t hypr "Konty: get icon is called"
-	current=$(get_volume)
-	if [[ "$current" -eq "0" ]]; then
-		echo ""
-	elif [[ ("$current" -ge "0") && ("$current" -le "40") ]]; then
-		echo ""
-	elif [[ ("$current" -ge "40") && ("$current" -le "70") ]]; then
-		echo ""
-	elif [[ ("$current" -ge "70") && ("$current" -le "100") ]]; then
-		echo ""
-	fi
+    local volume=$(get_volume)
+    local mute=$(pamixer --get-mute)
+    
+    if [ "$mute" = "true" ]; then
+        echo ""
+    elif [ "$volume" -eq 0 ]; then
+        echo ""
+    elif [ "$volume" -lt 33 ]; then
+        echo ""
+    elif [ "$volume" -lt 67 ]; then
+        echo ""
+    else
+        echo ""
+    fi
 }
 
-# Notify
+# Function to send notification
 notify_user() {
-	logger -t hypr "Konty: notify_user is called"
-	notify-send -h string:x-canonical-private-synchronous:sys-notify \
-		-u low -i "$(get_icon)" "Volume : $(get_volume) %"
+    local volume=$(get_volume)
+    local icon=$(get_icon)
+    
+    notify-send -h string:x-canonical-private-synchronous:sys-notify \
+        -u low -i "$icon" "Volume: $volume%"
+}
+
+# Function to output volume status in JSON format for Waybar
+output_waybar() {
+    local volume=$(get_volume)
+    local icon=$(get_icon)
+    
+    echo "{\"text\": \"$icon $volume%\", \"class\": \"volume\"}"
+}
+
+# Monitor volume changes and output to Waybar
+monitor_volume() {
+    while true; do
+        output_waybar
+        sleep 1
+    done
 }
 
 # Increase Volume
 inc_volume() {
-	logger -t hypr "Konty: inc_volume is called"
-	pamixer -i 5 && notify_user
+    logger -t hypr "Konty: inc_volume is called"
+    pamixer -i 5 && notify_user
 }
 
 # Decrease Volume
 dec_volume() {
-	logger -t hypr "Konty: dec_volume is called"
-	pamixer -d 5 && notify_user
+    logger -t hypr "Konty: dec_volume is called"
+    pamixer -d 5 && notify_user
 }
 
 # Toggle Mute
 toggle_mute() {
-	echo "$(date) - toggle_mute triggered with arguments: $@" >> /tmp/waybar.log
-	if [ "$(pamixer --get-mute)" == "false" ]; then
-		pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify \
-			-u low -i "WW" "Volume Switched OFF"
-	elif [ "$(pamixer --get-mute)" == "true" ]; then
-		pamixer -u && notify-send -h string:x-canonical-private-synchronous:sys-notify \
-		 	-u low -i "$(get_icon)" "Volume Switched ON"
-	fi
+    echo "$(date) - toggle_mute triggered with arguments: $@" >> /tmp/waybar.log
+    if [ "$(pamixer --get-mute)" == "false" ]; then
+        pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify \
+            -u low -i "" "Volume Switched OFF"
+    elif [ "$(pamixer --get-mute)" == "true" ]; then
+        pamixer -u && notify-send -h string:x-canonical-private-synchronous:sys-notify \
+            -u low -i "$(get_icon)" "Volume Switched ON"
+    fi
 }
 
 # Toggle Mic
 toggle_mic() {
-	echo "$(date) - toggle_mic triggered with arguments: $@" >> /tmp/waybar.log
-	if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
-		pamixer --default-source -m && notify-send -h string:x-canonical-private-synchronous:sys-notify \
-			-u low -i "" "Microphone Switched OFF"
-	elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-		pamixer -u --default-source u && notify-send -h string:x-canonical-private-synchronous:sys-notify \ 
-			-u low -i "" "Microphone Switched ON"
-	fi
+    echo "$(date) - toggle_mic triggered with arguments: $@" >> /tmp/waybar.log
+    if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
+        pamixer --default-source -m && notify-send -h string:x-canonical-private-synchronous:sys-notify \
+            -u low -i "" "Microphone Switched OFF"
+    elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
+        pamixer -u --default-source && notify-send -h string:x-canonical-private-synchronous:sys-notify \
+            -u low -i "" "Microphone Switched ON"
+    fi
 }
-# Get icons
+
+# Get mic icon
 get_mic_icon() {
-	current=$(pamixer --default-source --get-volume)
-	if [[ "$current" -eq "0" ]]; then
-		echo ""
-	elif [[ ("$current" -ge "0") && ("$current" -le "30") ]]; then
-		echo ""
-	elif [[ ("$current" -ge "30") && ("$current" -le "60") ]]; then
-		echo ""
-	elif [[ ("$current" -ge "60") && ("$current" -le "100") ]]; then
-		echo ""
-	fi
+    current=$(pamixer --default-source --get-volume)
+    if [[ "$current" -eq "0" ]]; then
+        echo ""
+    elif [[ ("$current" -ge "0") && ("$current" -le "30") ]]; then
+        echo ""
+    elif [[ ("$current" -ge "30") && ("$current" -le "60") ]]; then
+        echo ""
+    elif [[ ("$current" -ge "60") && ("$current" -le "100") ]]; then
+        echo ""
+    fi
 }
-# Notify
+
+# Notify mic user
 notify_mic_user() {
-	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_mic_icon)" "Mic-Level : $(pamixer --default-source --get-volume) %"
+    notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_mic_icon)" "Mic-Level : $(pamixer --default-source --get-volume) %"
 }
 
 # Increase MIC Volume
 inc_mic_volume() {
-	pamixer --default-source -i 5 && notify_mic_user
+    pamixer --default-source -i 5 && notify_mic_user
 }
 
 # Decrease MIC Volume
 dec_mic_volume() {
-	pamixer --default-source -d 5 && notify_mic_user
+    pamixer --default-source -d 5 && notify_mic_user
 }
 
 # Execute accordingly
 if [[ "$1" == "--get" ]]; then
-	get_volume
+    get_volume
 elif [[ "$1" == "--inc" ]]; then
-	logger -t hypr "Konty: d--inc is called"
-	inc_volume
+    logger -t hypr "Konty: --inc is called"
+    inc_volume
 elif [[ "$1" == "--dec" ]]; then
-	dec_volume
+    dec_volume
 elif [[ "$1" == "--toggle" ]]; then
-	toggle_mute
+    toggle_mute
 elif [[ "$1" == "--toggle-mic" ]]; then
-	toggle_mic
+    toggle_mic
 elif [[ "$1" == "--get-icon" ]]; then
-	get_icon
+    get_icon
 elif [[ "$1" == "--get-mic-icon" ]]; then
-	get_mic_icon
+    get_mic_icon
 elif [[ "$1" == "--mic-inc" ]]; then
-	inc_mic_volume
+    inc_mic_volume
 elif [[ "$1" == "--mic-dec" ]]; then
-	dec_mic_volume
+    dec_mic_volume
 else
-	get_volume
+    monitor_volume
 fi

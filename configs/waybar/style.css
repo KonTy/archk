@@ -121,6 +121,13 @@ tooltip label{
     border: 2px;
 }
 
+#custom-volume {
+    font-size: 14px;
+    color: #ffffff;
+    padding: 0 10px;
+  }
+
+
 #temperature.critical {
     color: #e92d4d;
 }
